@@ -118,13 +118,30 @@
 				<!--导航菜单-->
 				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
 					 unique-opened router v-show="!collapsed">
+
 					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
 						<el-submenu :index="index+''" v-if="!item.leaf">
 							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
+							<!-- <template slot="title">分组一</template> -->
 							<el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden" @click="tagList(child)">{{child.name}}</el-menu-item>
 						</el-submenu>
 						<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
 					</template>
+
+
+					<!-- <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
+						<el-submenu :index="index+''" v-if="!item.leaf">
+							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
+							<el-submenu v-for="child in item.children" v-if="!child.hidden">
+								<template slot="title" >{{child.name}}</template>
+								<el-menu-item v-for="tag in child.childrens" :index="tag.path" :key="tag.path" v-if="!tag.hidden" @click="tagList(tag)">{{tag.name}}</el-menu-item>
+							</el-submenu>
+						</el-submenu>
+						<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
+					</template> -->
+
+
+
 				</el-menu>
 				<!--导航菜单-折叠后-->
 				<ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
