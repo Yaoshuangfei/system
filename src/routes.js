@@ -130,16 +130,16 @@ let routes = [
         name: '',
         hidden: true
     },
-    {
-        path: '/',
-        component: Home,
-        name: '',
-        iconCls: 'fa fa-address-card',
-        leaf: true,//只有一个节点
-        children: [
-            { path: '/StoreInformation', component: StoreInformation, name: '首页' ,  }
-        ]
-    },
+    // {
+    //     path: '/',
+    //     component: Home,
+    //     name: '',
+    //     iconCls: 'fa fa-address-card',
+    //     leaf: true,//只有一个节点
+    //     children: [
+    //         { path: '/StoreInformation', component: StoreInformation, name: '首页' ,  hidden: true  }
+    //     ]
+    // },
     {
         path: '/',
         component: Home,
@@ -149,7 +149,8 @@ let routes = [
             { path: '/main', component:Main, name: '主页', hidden: true },
             { path: '/business_info', component:business_info, name: '商户信息' },
             { path: '/business_loan', component:business_loan, name: '商户借款记录' },
-            { path: '/business_feedback', component:business_feedback, name: '商户反馈列表' }
+            { path: '/business_feedback', component:business_feedback, name: '商户反馈列表' },
+            { path: '/StoreInformation', component: StoreInformation, name: '首页', hidden: true  }
         ]
     },
     {

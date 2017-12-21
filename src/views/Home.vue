@@ -121,7 +121,7 @@
 					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
 						<el-submenu :index="index+''" v-if="!item.leaf">
 							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
-							<el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>
+							<el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden" @click="tagList(child)">{{child.name}}</el-menu-item>
 						</el-submenu>
 						<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
 					</template>
@@ -145,13 +145,27 @@
 			</aside>
 			<section class="content-container">
 				<div class="grid-content bg-purple-light">
-					<el-col :span="24" class="breadcrumb-container">
-						<strong class="title">{{$route.name}}</strong>
+					<el-col :span="1" >
+						<router-link :to="{ name: '首页'}">
+							<el-button  type="primary">首页</el-button>
+						</router-link>
+					</el-col>
+					<el-col :span="22" class="breadcrumb-container">
+						<!-- <strong class="title">{{$route.name}}</strong>
 						<el-breadcrumb separator="/" class="breadcrumb-inner">
 							<el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
 								{{ item.name }}
 							</el-breadcrumb-item>
-						</el-breadcrumb>
+						</el-breadcrumb> -->
+
+						<el-tag :key="tag" v-for="tag in dynamicTags" @click.native="colorbk" :closable="true" :close-transition="false" @close="handleClose(tag)">
+							<router-link :to="{ name: tag.path}">
+								<el-button style="margin-top:-5px;color:#fff"  type="text">{{tag.name}}</el-button>
+							</router-link>
+						</el-tag>
+					</el-col>
+					<el-col :span="1" v-if="dynamicTags.length > 0">
+							<el-button @click="shutAll" type="primary">全部关闭</el-button>
 					</el-col>
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
@@ -167,36 +181,15 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script>
 	import { state } from '../vuex/state'
 	import {baseUrl , editUser, addUser } from '../api/api';
 	export default {
 		data() {
 			return {
+				dynamicTags: [],
+		        inputVisible: false,
+		        inputValue: '',
 				eub:'10000000',
 				rmb:'1000',
 				sysName:'后台管理',
@@ -218,6 +211,32 @@
 			}
 		},
 		methods: {
+			tagList(row){
+				let keyg = true
+				for (var i = 0; i < this.dynamicTags.length; i++) {
+					if(this.dynamicTags[i].path === row.name){
+						keyg = false
+					}
+				}
+				if(keyg){
+					const obj = {
+						name:row.name.substring(4,0),
+						path:row.name
+					}
+					this.dynamicTags.push(obj)
+				}
+				
+			},
+			shutAll(){
+				this.dynamicTags = []
+			},
+			colorbk(){
+				console.log(111)
+			},
+			handleClose(tag) {
+		        this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+		        console.log(this.dynamicTags)
+		      },
 			getb(){
 				const _this = this;
 				$.ajax({
@@ -277,7 +296,7 @@
 				this.sysUserAvatar = user.avatar || '';
 			}
 			this.arry = this.$router.options.routes
-			this.getb();
+			// this.getb();
 			// console.log(state.commissionLine)
 			// if(state.commissionLine !== 3 && state.commissionLine !== 5){
 			// 	console.log(1)
@@ -432,8 +451,40 @@
 				.content-wrapper {
 					background-color: #fff;
 					box-sizing: border-box;
+					margin-top: 10px;
+					border-top: 1px solid #ddd;
 				}
 			}
 		}
 	}
+</style>
+<style type="text/css">
+	.el-tag{
+	    background-color: #20a0ff;
+	    padding: 0 5px;
+	    height: 36px;
+	    line-height: 36px;
+	    font-size: 12px;
+	    color: #fff;
+	    width: 80px;
+	    margin-right: 5px;
+	    box-sizing: border-box;
+	    border: 1px solid transparent;
+	    white-space: nowrap;
+	}
+	.el-tag .el-icon-close {
+	    border-radius: 50%;
+	    text-align: center;
+	    position: relative;
+	    cursor: pointer;
+	    font-size: 12px;
+	    -ms-transform: scale(.75,.75);
+	    transform: scale(.75,.75);
+	    height: 18px;
+	    width: 18px;
+	    line-height: 18px;
+	    vertical-align: middle;
+	    top: -4px;
+	    right: 0px;
+}
 </style>
