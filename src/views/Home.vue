@@ -182,7 +182,9 @@
 						</el-tag>
 					</el-col>
 					<el-col :span="1" v-if="dynamicTags.length > 0">
+						<router-link :to="{ name: '首页'}">
 							<el-button @click="shutAll" type="primary">全部关闭</el-button>
+						</router-link>
 					</el-col>
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
@@ -235,10 +237,12 @@
 						keyg = false
 					}
 				}
+				console.log(row)
 				if(keyg){
 					const obj = {
 						name:row.name.substring(4,0),
-						path:row.name
+						path:row.name,
+						_path:row.path
 					}
 					this.dynamicTags.push(obj)
 				}
@@ -252,7 +256,14 @@
 			},
 			handleClose(tag) {
 		        this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
-		        console.log(this.dynamicTags)
+		        if(this.dynamicTags.length > 0){
+		        	const i = this.dynamicTags.length-1
+			        const _path = this.dynamicTags[i]._path
+			        console.log(_path)
+			        this.$router.push({ path: _path });
+		        }else{
+		        	this.$router.push({ path: '/StoreInformation' });
+		        }
 		      },
 			getb(){
 				const _this = this;
