@@ -207,7 +207,6 @@
 		data() {
 			return {
 				dynamicTags: [],
-				tests:[],
 		        inputVisible: false,
 		        inputValue: '',
 				eub:'10000000',
