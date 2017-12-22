@@ -116,7 +116,7 @@
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
 				<!--导航菜单-->
-				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
+				<el-menu :default-active="$route.path" class="el-menu-vertical-demo"
 					 unique-opened router v-show="!collapsed">
 
 					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
@@ -175,7 +175,7 @@
 							</el-breadcrumb-item>
 						</el-breadcrumb> -->
 
-						<el-tag :key="tag" v-for="tag in dynamicTags" @click.native="colorbk" :closable="true" :close-transition="false" @close="handleClose(tag)">
+						<el-tag :key="tag" v-for="(tag,index) in dynamicTags" @click.native="colorbk" :closable="true" :close-transition="false" @close="handleClose(tag,index)">
 							<router-link :to="{ name: tag.path}">
 								<el-button style="margin-top:-5px;color:#fff"  type="text">{{tag.name}}</el-button>
 							</router-link>
@@ -230,14 +230,16 @@
 			}
 		},
 		methods: {
+			// 添加标签数组   及数组去重 
 			tagList(row){
-				let keyg = true
+				let keyg = true//开关 
+				// 当前选择数据 与已存在数组循环比较 若数组内已存在 这关闭开关
 				for (var i = 0; i < this.dynamicTags.length; i++) {
 					if(this.dynamicTags[i].path === row.name){
 						keyg = false
 					}
 				}
-				console.log(row)
+				// 把当前选中的数据push到标签数组中  由开关来判断是否执行 
 				if(keyg){
 					const obj = {
 						name:row.name.substring(4,0),
@@ -246,24 +248,33 @@
 					}
 					this.dynamicTags.push(obj)
 				}
-				
 			},
+			// 清空标签数组
 			shutAll(){
 				this.dynamicTags = []
 			},
+			// 待定选中标签背景颜色切换
 			colorbk(){
 				console.log(111)
 			},
-			handleClose(tag) {
-		        this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
-		        if(this.dynamicTags.length > 0){
-		        	const i = this.dynamicTags.length-1
-			        const _path = this.dynamicTags[i]._path
-			        console.log(_path)
-			        this.$router.push({ path: _path });
-		        }else{
-		        	this.$router.push({ path: '/StoreInformation' });
-		        }
+			//   删除标签
+			handleClose(tag,index) {
+		        this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);//删除标签
+		        // 判断是否是第一个标签 且数组大于1  if是  显示当前数组的第一个标签  else 显示当前删除标签的前一个标签路由
+				if(index === 0 && this.dynamicTags.length > 0){
+					const i = index
+				    const _path = this.dynamicTags[i]._path
+					this.$router.push({ path: _path });
+				}else{
+			        if(this.dynamicTags.length > 0){//判断当前数组是否存在 存在 则删除 不存在 则显示首页
+			        	const i = index-1
+				        const _path = this.dynamicTags[i]._path
+				        console.log(_path)
+				        this.$router.push({ path: _path });
+			        }else{
+			        	this.$router.push({ path: '/StoreInformation' });
+			        }
+				}
 		      },
 			getb(){
 				const _this = this;
@@ -288,9 +299,6 @@
 			},
 			handleopen() {
 				//console.log('handleopen');
-			},
-			handleclose() {
-				//console.log('handleclose');
 			},
 			handleselect: function (a, b) {
 			},
