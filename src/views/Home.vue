@@ -119,28 +119,38 @@
 				<el-menu :default-active="$route.path" class="el-menu-vertical-demo"
 					 unique-opened router v-show="!collapsed">
 
+
 					<template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
 						<el-submenu :index="index+''" v-if="!item.leaf">
+							<!-- 一级菜单 -->
 							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
-							<!-- <template slot="title">分组一</template> -->
-							<el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden" @click="tagList(child)">{{child.name}}</el-menu-item>
+							<!-- 二级菜单     判断是否有三级菜单 有  则继续循环-->
+							<el-submenu v-for="(child,to) in item.children" :index="index+'-'+ to" v-if="!child.hidden && child.children">
+								<template slot="title">{{child.name}}</template>
+								<!-- 三级菜单 -->
+								<el-menu-item  v-for="tag in child.children" :index="tag.path" :key="tag.path" v-if="!tag.hidden" @click="tagList(tag)">{{tag.name}}</el-menu-item>
+
+							</el-submenu>
+							<!-- 没有三级菜单时调用 -->
+							<el-menu-item :index="child.path" :key="child.path" @click="tagList(child)" v-else>{{child.name}}</el-menu-item>
 						</el-submenu>
-						<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
+						
+						<!-- <el-submenu v-else :index="index+''">
+							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
+							<el-menu-item v-for="child in item.children" v-if="!child.hidden">{{child.name}}</el-menu-item>
+						</el-submenu> -->
+
+
+						<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}444</el-menu-item>
 					</template>
 
-
-					<!-- <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-						<el-submenu :index="index+''" v-if="!item.leaf">
+					<!-- <template v-for="(item,index) in meunList" >
+						<el-submenu>
 							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
-							<el-submenu v-for="child in item.children" v-if="!child.hidden">
-								<template slot="title" >{{child.name}}</template>
-								<el-menu-item v-for="tag in child.childrens" :index="tag.path" :key="tag.path" v-if="!tag.hidden" @click="tagList(tag)">{{tag.name}}</el-menu-item>
-							</el-submenu>
+							<el-menu-item v-for="child in item.children" v-if="!child.hidden">{{child.name}}</el-menu-item>
 						</el-submenu>
-						<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
+						<el-menu-item v-if="item.leaf&&item.children.length>0" ><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
 					</template> -->
-
-
 
 				</el-menu>
 				<!--导航菜单-折叠后-->
@@ -232,6 +242,7 @@
 		methods: {
 			// 添加标签数组   及数组去重 
 			tagList(row){
+				console.log(row.name)
 				let keyg = true//开关 
 				// 当前选择数据 与已存在数组循环比较 若数组内已存在 这关闭开关
 				for (var i = 0; i < this.dynamicTags.length; i++) {
@@ -241,11 +252,13 @@
 				}
 				// 把当前选中的数据push到标签数组中  由开关来判断是否执行 
 				if(keyg){
+					console.log(1)
 					const obj = {
 						name:row.name.substring(4,0),
 						path:row.name,
 						_path:row.path
 					}
+					console.log(obj)
 					this.dynamicTags.push(obj)
 				}
 			},

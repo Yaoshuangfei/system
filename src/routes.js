@@ -124,35 +124,74 @@ let routes = [
         name: '',
         hidden: true
     },
-     {
+    {
         path: '/mian',
         component: Main,
         name: '',
         hidden: true
     },
     // {
-    //     path: '/',
-    //     component: Home,
-    //     name: '',
-    //     iconCls: 'fa fa-address-card',
-    //     leaf: true,//只有一个节点
-    //     children: [
-    //         { path: '/StoreInformation', component: StoreInformation, name: '首页' ,  hidden: true  }
-    //     ]
+    //     path: '/StoreInformation',
+    //     component: StoreInformation,
+    //     name: '首页',
+    //     hidden: true
     // },
+    {
+        path: '/',
+        component: Home,
+        name: '',
+        iconCls: 'fa fa-address-card',
+        leaf: true,//只有一个节点
+        hidden: true,
+        children: [
+            { path: '/StoreInformation', component: StoreInformation, name: '首页' ,  hidden: true  }
+        ]
+    },
+    
+    // 
+    // 
+    // 
+    // 
     {
         path: '/',
         component: Home,
         name: ' 商户管理',
         iconCls: 'el-icon-message',//图标样式class
         children: [
-            { path: '/main', component:Main, name: '主页', hidden: true },
-            { path: '/business_info', component:business_info, name: '商户信息' },
-            { path: '/business_loan', component:business_loan, name: '商户借款记录' },
-            { path: '/business_feedback', component:business_feedback, name: '商户反馈列表' },
-            { path: '/StoreInformation', component: StoreInformation, name: '首页', hidden: true  }
+            // { path: '/main', component:Main, name: '主页', hidden: true },
+            {  path: '/', component:DeliverGoods, name: '商户信息' ,children:[
+                { path: '/business_info', component:business_info, name: '商户借款' },
+                { path: '/business_feedback', component:business_feedback, name: '商户反馈列表' },
+                { path: '/business_loan', component:business_loan, name: '商户借款记录' }
+            ]},
+            {  path: '/', component:DeliverGoods,name: '商户信息' ,children:[
+                { path: '/reimbursement', component: reimbursement, name: '已还款订单' },
+                { path: '/overdue', component: overdue, name: '已逾期订单' },
+                { path: '/already_bad_debts', component: already_bad_debts, name: '已坏账订单' },
+            ]},
+            { path: '/', component:DeliverGoods, name: '商户信息' ,children:[
+                { path: '/GoodShipped', component: GoodShipped, name: '发布商品' },
+                { path: '/OnSale', component: OnSale, name: '出售中的商品' },
+                { path: '/OffTheShelf', component: OffTheShelf, name: '下架商品' },
+                { path: '/Illegal', component: Illegal, name: '违规商品' },
+                { path: '/ReturnGoods', component: ReturnGoods, name: '退货的商品' }
+            ]},
+            { path: '/borrow', component: borrow, name: '借款订单' }
         ]
     },
+    // {
+    //     path: '/',
+    //     component: Home,
+    //     name: ' 商户管理',
+    //     iconCls: 'el-icon-message',//图标样式class
+    //     children: [
+    //         // { path: '/main', component:Main, name: '主页', hidden: true },
+    //         { path: '/business_info', component:business_info, name: '商户信息' },
+    //         { path: '/business_loan', component:business_loan, name: '商户借款记录' },
+    //         { path: '/business_feedback', component:business_feedback, name: '商户反馈列表' },
+    //         { path: '/StoreInformation', component: StoreInformation, name: '首页', hidden: true  }
+    //     ]
+    // },
     {
         path: '/',
         component: Home,
@@ -179,23 +218,23 @@ let routes = [
         name: '借款管理',
         iconCls: 'fa el-icon-picture',
         children: [
-            { path: '/borrow', component: borrow, name: '借款订单' },
+            
             { path: '/loan_order', component: loan_order, name: '放款订单' }
             
         ]
     },
-    {
-        path: '/',
-        component: Home,
-        name: '贷后管理',
-        iconCls: 'fa el-icon-picture',
-        children: [
-            { path: '/reimbursement', component: reimbursement, name: '已还款订单' },
-            { path: '/overdue', component: overdue, name: '已逾期订单' },
-            { path: '/already_bad_debts', component: already_bad_debts, name: '已坏账订单' },
-             { path: '/details/:id', component: details, name: '订单详情' ,hidden: true }
-        ]
-    },
+    // {
+    //     path: '/',
+    //     component: Home,
+    //     name: '贷后管理',
+    //     iconCls: 'fa el-icon-picture',
+    //     children: [
+    //         { path: '/reimbursement', component: reimbursement, name: '已还款订单' },
+    //         { path: '/overdue', component: overdue, name: '已逾期订单' },
+    //         { path: '/already_bad_debts', component: already_bad_debts, name: '已坏账订单' },
+    //          { path: '/details/:id', component: details, name: '订单详情' ,hidden: true }
+    //     ]
+    // },
     {
         path: '/',
         component: Home,
@@ -218,19 +257,22 @@ let routes = [
             // { path: '/Address', component: Address, name: '地址管理' }
         ]
     },
-     {
-        path: '/',
-        component: Home,
-        name: '系统管理',
-        iconCls: 'fa fa-id-card-o',
-        children: [
-            { path: '/GoodShipped', component: GoodShipped, name: '发布商品' },
-            { path: '/OnSale', component: OnSale, name: '出售中的商品' },
-            { path: '/OffTheShelf', component: OffTheShelf, name: '下架商品' },
-            { path: '/Illegal', component: Illegal, name: '违规商品' },
-            { path: '/ReturnGoods', component: ReturnGoods, name: '退货的商品' }
-        ]
-    },
+    //  {
+    //     path: '/',
+    //     component: Home,
+    //     name: '系统管理',
+    //     iconCls: 'fa fa-id-card-o',
+    //     children: [
+    //         { path: '/GoodShipped', component: GoodShipped, name: '发布商品' },
+    //         { path: '/OnSale', component: OnSale, name: '出售中的商品' },
+    //         { path: '/OffTheShelf', component: OffTheShelf, name: '下架商品' },
+    //         { path: '/Illegal', component: Illegal, name: '违规商品' },
+    //         { path: '/ReturnGoods', component: ReturnGoods, name: '退货的商品' }
+    //     ]
+    // },
+
+
+
     // {
     //     path: '/',
     //     component: Home,
