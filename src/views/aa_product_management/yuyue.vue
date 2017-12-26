@@ -690,18 +690,5 @@
 </script>
 
 <style>
-	.el-dialog--small {
-    	width: 30%;
-    	border-radius: 10px
-	}
-	.el-form-item__label{
-		text-align: left;
-	}
-	.el-dialog__body{
-		margin-left: 0 ! important ;
-	}
-	.img {
-		width:100px;
-		height:100px;
-	}
+
 </style>
