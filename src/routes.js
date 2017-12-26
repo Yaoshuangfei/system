@@ -94,6 +94,7 @@ import StoreInformation from './views/Home/StoreInformation.vue'
     import withdrawalsd from './views/aa_finance_management/withdrawalsd.vue'
     import withdrawalse from './views/aa_finance_management/withdrawalse.vue'
     import withdrawalsf from './views/aa_finance_management/withdrawalsf.vue'
+    import withdrawalsh from './views/aa_finance_management/withdrawalsh.vue'
 
     import loan from './views/aa_finance_management/loan.vue'
 
@@ -155,113 +156,6 @@ import StoreInformation from './views/Home/StoreInformation.vue'
 
 
 
-
-
-// 商户管理
-import business_info from './views/business_management/business_info.vue'
-import business_loan from './views/business_management/business_loan.vue'
-import business_feedback from './views/business_management/business_feedback.vue'
-
-
-// 用户管理
-import user_info from './views/user_management/user_info.vue'
-import user_loan_list from './views/user_management/user_loan_list.vue'
-
-// 产品列表
-import product from './views/product_list/product.vue'
-
-
-// 借款管理
-import borrow from './views/loan_management/borrow.vue'
-import loan_order from './views/loan_management/loan_order.vue'
-
-// 贷后管理
-import reimbursement from './views/after_loan/reimbursement.vue'
-import overdue from './views/after_loan/overdue.vue'
-import already_bad_debts from './views/after_loan/already_bad_debts.vue'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*系统管理 systemSettings*/  
-import Jurisdiction from './views/systemSettings/Jurisdiction.vue'
-import SystemPush from './views/systemSettings/SystemPush.vue'
-import ChangePasswords from './views/systemSettings/ChangePasswords.vue'
-import releaseLook from './views/systemSettings/releaseLook.vue'
-import releaseAdd from './views/systemSettings/releaseAdd.vue'
-import releaseReg from './views/systemSettings/releaseReg.vue'
-
-/*配置管理 configuration*/
-import banner from './views/configuration/banner.vue' 
-// import system from './views/configuration/system.vue' 
-import Authentication from './views/configuration/Authentication.vue'
-
-
-
-
-/*订单管理 order*/
-import OrderInformation from './views/order/OrderInformation.vue'
-import details from './views/order/details.vue'
-
-// 物流管理 logistics
-import Freight from './views/logistics/Freight.vue'
-// import Address from './views/logistics/Address.vue'
-
-/*商品管理 commodity */
-import GoodShipped from './views/commodity/GoodShipped.vue'
-import OnSale from './views/commodity/OnSale.vue'
-import OffTheShelf from './views/commodity/OffTheShelf.vue'
-import Illegal from './views/commodity/Illegal.vue'
-import ReturnGoods from './views/commodity/ReturnGoods.vue'
-
-// 身份管理 Identity
-// import Identity from './views/Identity/Identitys.vue'
-
-/*店铺管理 shop */ // 
-import see from './views/shop/see.vue'
-import style from './views/shop/style.vue'
-import picture from './views/shop/picture.vue'
-
-/*财务管理 Finance*/
-import FlowingWater from './views/Finance/FlowingWater.vue'
-import txgl from './views/Finance/txgl.vue'
-
-// 补货专区 Replenishment 
-import Replenishment from './views/Replenishment/Replenishment.vue'
-import add from './views/Replenishment/add.vue'
-
-
-
-// 增值管理   Increment
-import video from './views/Increment/video.vue'
-import PublicWelfare from './views/Increment/PublicWelfare.vue'
-import Marketing from './views/Increment/Marketing.vue'
-import pjadmin from './views/Increment/pjadmin.vue'
-
-
-
-
-
-
 let routes = [
     {
         path: '/login',
@@ -275,12 +169,6 @@ let routes = [
         name: '',
         hidden: true
     },
-    // {
-    //     path: '/StoreInformation',
-    //     component: StoreInformation,
-    //     name: '首页',
-    //     hidden: true
-    // },
     {
         path: '/',
         component: Home,
@@ -299,12 +187,12 @@ let routes = [
         iconCls: 'el-icon-message',//图标样式class
         children: [
             // { path: '/main', component:Main, name: '主页', hidden: true },
-            {  path: '/', component:DeliverGoods, name: '产品发布' ,children:[
+            {  path: '/DeliverGoods', component:DeliverGoods, name: '产品发布' ,children:[
                 { path: '/xinshou', component:xinshou, name: '发布新手产品' },
                 { path: '/routine', component:routine, name: '发布常规产品' },
                 { path: '/yuyue', component:yuyue, name: '发布预约产品' }
             ]},
-            {  path: '/', component:DeliverGoods,name: '产品信息' ,children:[
+            {  path: '/DeliverGoods', component:DeliverGoods,name: '产品信息' ,children:[
                 { path: '/producta', component: producta, name: '产品发布记录' },
                 { path: '/productb', component: productb, name: '查看预约产品' },
                 { path: '/productc', component: productc, name: '产品统计' },
@@ -312,7 +200,7 @@ let routes = [
                 { path: '/producte', component: producte, name: '投资记录' },
                 { path: '/productf', component: productf, name: '虚拟投资列表' }
             ]},
-            { path: '/', component:DeliverGoods, name: '产品信息' ,children:[
+            { path: '/DeliverGoods', component:DeliverGoods, name: '产品结算' ,children:[
                 { path: '/interest', component: interest, name: '付息总表' },
                 { path: '/interesta', component: interesta, name: '付息明细表' }
             ]}
@@ -325,30 +213,30 @@ let routes = [
         iconCls: 'el-icon-message',//图标样式class
         children: [
             // { path: '/main', component:Main, name: '主页', hidden: true },
-            {  path: '/', component:DeliverGoods, name: '注册管理' ,children:[
-                { path: '/register', component:register, name: '商户借款' },
-                { path: '/registera', component:registera, name: '商户反馈列表' },
-                { path: '/registerb', component:registerb, name: '商户反馈列表' },
-                { path: '/registerc', component:registerc, name: '商户反馈列表' },
-                { path: '/registerd', component:registerd, name: '商户借款记录' }
+            {  path: '/DeliverGoods', component:DeliverGoods, name: '注册管理' ,children:[
+                { path: '/register', component:register, name: '注册用户信息' },
+                { path: '/registera', component:registera, name: '渠道注册信息' },
+                { path: '/registerb', component:registerb, name: '平台注册人数' },
+                { path: '/registerc', component:registerc, name: '注册人数日统计' },
+                { path: '/registerd', component:registerd, name: '注册当日投资统计' }
             ]},
-            {  path: '/', component:DeliverGoods,name: 'Banner管理' ,children:[
-                { path: '/fbbanner', component: fbbanner, name: '已还款订单' },
-                { path: '/fbbannera', component: fbbannera, name: '已坏账订单' },
+            {  path: '/DeliverGoods', component:DeliverGoods,name: 'Banner管理' ,children:[
+                { path: '/fbbanner', component: fbbanner, name: '发布Banner' },
+                { path: '/fbbannera', component: fbbannera, name: 'Banner展示' },
             ]},
-            { path: '/', component:DeliverGoods, name: '版本管理' ,children:[
-                { path: '/edition', component: edition, name: '发布商品' },
-                { path: '/editiona', component: editiona, name: '出售中的商品' },
-                { path: '/editionb', component: editionb, name: '下架商品' },
-                { path: '/editionc', component: editionc, name: '退货的商品' }
+            { path: '/DeliverGoods', component:DeliverGoods, name: '版本管理' ,children:[
+                { path: '/edition', component: edition, name: '发布版本' },
+                { path: '/editiona', component: editiona, name: '版本展示' },
+                { path: '/editionb', component: editionb, name: '启动页上传' },
+                { path: '/editionc', component: editionc, name: '启动页展示' }
             ]},
-            {  path: '/', component:DeliverGoods, name: '新闻公告' ,children:[
-                { path: '/journalism', component:journalism, name: '商户借款' },
-                { path: '/journalisma', component:journalisma, name: '商户反馈列表' },
-                { path: '/journalismb', component:journalismb, name: '商户反馈列表' },
-                { path: '/journalismc', component:journalismc, name: '商户借款记录' }
+            {  path: '/DeliverGoods', component:DeliverGoods, name: '新闻公告' ,children:[
+                { path: '/journalism', component:journalism, name: '公告展示' },
+                { path: '/journalisma', component:journalisma, name: '发布公告' },
+                { path: '/journalismb', component:journalismb, name: '新闻列表' },
+                { path: '/journalismc', component:journalismc, name: '新闻管理' }
             ]},
-            {  path: '/', component:DeliverGoods,name: '报表统计' ,children:[
+            {  path: '/DeliverGoods', component:DeliverGoods,name: '报表统计' ,children:[
                 { path: '/form', component: form, name: '安卓聚到汇总' },
                 { path: '/forma', component: forma, name: '渠道投资计划(新)' },
                 { path: '/formb', component: formb, name: '平台渠道统计' },
@@ -366,7 +254,7 @@ let routes = [
                 { path: '/formm', component: formm, name: 'wap用户投资统计' },
                 { path: '/formn', component: formn, name: '访客渠道投资统计' }
             ]},
-            { path: '/', component:DeliverGoods, name: '数据分析' ,children:[
+            { path: '/DeliverGoods', component:DeliverGoods, name: '数据分析' ,children:[
                 { path: '/data', component: data, name: '地域统计' },
                 { path: '/datab', component: datab, name: '用户数据分析' },
                 { path: '/datac', component: datac, name: '用户年龄分布表' },
@@ -383,166 +271,140 @@ let routes = [
     {
         path: '/',
         component: Home,
-        name: ' 产品管理',
+        name: ' 活动管理',
         iconCls: 'el-icon-message',//图标样式class
         children: [
             // { path: '/main', component:Main, name: '主页', hidden: true },
-            {  path: '/', component:DeliverGoods, name: '产品发布' ,children:[
-                { path: '/business_info', component:business_info, name: '商户借款' },
-                { path: '/business_feedback', component:business_feedback, name: '商户反馈列表' },
-                { path: '/business_loan', component:business_loan, name: '商户借款记录' }
-            ]},
-            {  path: '/', component:DeliverGoods,name: '产品信息' ,children:[
-                { path: '/reimbursement', component: reimbursement, name: '已还款订单' },
-                { path: '/overdue', component: overdue, name: '已逾期订单' },
-                { path: '/already_bad_debts', component: already_bad_debts, name: '已坏账订单' },
-            ]},
-            { path: '/', component:DeliverGoods, name: '产品信息' ,children:[
-                { path: '/GoodShipped', component: GoodShipped, name: '发布商品' },
-                { path: '/OnSale', component: OnSale, name: '出售中的商品' },
-                { path: '/OffTheShelf', component: OffTheShelf, name: '下架商品' },
-                { path: '/Illegal', component: Illegal, name: '违规商品' },
-                { path: '/ReturnGoods', component: ReturnGoods, name: '退货的商品' }
-            ]},
-            { path: '/borrow', component: borrow, name: '借款订单' }
+            {  path: '/DeliverGoods', component:DeliverGoods, name: '情人节' ,children:[
+                { path: '/activity', component:activity, name: '情人节活动' }
+            ]}
         ]
     },
-    // {
-    //     path: '/',
-    //     component: Home,
-    //     name: ' 商户管理',
-    //     iconCls: 'el-icon-message',//图标样式class
-    //     children: [
-    //         // { path: '/main', component:Main, name: '主页', hidden: true },
-    //         { path: '/business_info', component:business_info, name: '商户信息' },
-    //         { path: '/business_loan', component:business_loan, name: '商户借款记录' },
-    //         { path: '/business_feedback', component:business_feedback, name: '商户反馈列表' },
-    //         { path: '/StoreInformation', component: StoreInformation, name: '首页', hidden: true  }
-    //     ]
-    // },
     {
         path: '/',
         component: Home,
-        name: ' 用户管理',
+        name: ' 财务管理',
         iconCls: 'el-icon-message',//图标样式class
         children: [
-            { path: '/user_info', component:user_info, name: '用户信息' }
-            // { path: '/user_loan_list', component:user_loan_list, name: '用户借款记录' }
+            // { path: '/main', component:Main, name: '主页', hidden: true },
+            {  path: '/DeliverGoods', component:DeliverGoods, name: '财务数据' ,children:[
+                { path: '/financia', component:financia, name: '预留金额' },
+                { path: '/financiaa', component:financiaa, name: '一周不可动金额' },
+                { path: '/financiab', component:financiab, name: '平台可用金额' },
+                { path: '/financiac', component:financiac, name: '资金速冻明细' }
+            ]},
+            {  path: '/DeliverGoods', component:DeliverGoods,name: '充值管理' ,children:[
+                { path: '/recharge', component: recharge, name: '充值记录' },
+                { path: '/rechargea', component: rechargea, name: '企业充值记录' },
+                { path: '/rechargeb', component: rechargeb, name: '充值记录统计' },
+                { path: '/rechargec', component: rechargec, name: '充值手续费' },
+            ]},
+            { path: '/DeliverGoods', component:DeliverGoods, name: '提现管理' ,children:[
+                { path: '/withdrawals', component: withdrawals, name: '企业提现记录' },
+                { path: '/withdrawalsa', component: withdrawalsa, name: '提现记录' },
+                { path: '/withdrawalsb', component: withdrawalsb, name: '异常提现记录' },
+                { path: '/withdrawalsc', component: withdrawalsc, name: '提现记录统计' },
+                { path: '/withdrawalsd', component: withdrawalsd, name: '提现手续费' },
+                { path: '/withdrawalse', component: withdrawalse, name: '手动提现' },
+                { path: '/withdrawalsf', component: withdrawalsf, name: '实际提现率' },
+                { path: '/withdrawalsh', component: withdrawalsh, name: '手动提现记录' }
+            ]},
+            {  path: '/DeliverGoods', component:DeliverGoods, name: '借款业务' ,children:[
+                { path: '/loan', component:loan, name: '借款申请' }
+            ]}
         ]
     },
     {
         path: '/',
         component: Home,
-        name: ' 产品管理',
+        name: ' 权限管理',
         iconCls: 'el-icon-message',//图标样式class
         children: [
-            { path: '/product', component: product, name: '产品列表' }
-            // { path: '/ChangePasswords', component: ChangePasswords, name: '商户反馈列表' }
+            { path: '/jurisdictiona', component: jurisdictiona, name: '部门列表' },
+            { path: '/jurisdictionb', component: jurisdictionb, name: '添加部门' },
+            { path: '/jurisdictionc', component: jurisdictionc, name: '管理员列表' },
+            { path: '/jurisdictiond', component: jurisdictiond, name: '添加管路员' },
+            { path: '/jurisdictione', component: jurisdictione, name: '模块列表展示' },
+            { path: '/jurisdictionf', component: jurisdictionf, name: '添加新模块' },
+            { path: '/jurisdictiong', component: jurisdictiong, name: '角色列表展示' },
+            { path: '/jurisdictionh', component: jurisdictionh, name: '添加新角色' },
         ]
     },
     {
         path: '/',
         component: Home,
-        name: '借款管理',
-        iconCls: 'fa el-icon-picture',
+        name: ' 功能管理',
+        iconCls: 'el-icon-message',//图标样式class
         children: [
-            
-            { path: '/loan_order', component: loan_order, name: '放款订单' }
-            
+            { path: '/thread', component:thread, name: '线程管理' },
+            {  path: '/DeliverGoods', component:DeliverGoods, name: '解绑管理' ,children:[
+                { path: '/unbundlinga', component:unbundlinga, name: '解绑银行卡' },
+                { path: '/unbundlingb', component:unbundlingb, name: '无验证码解绑卡' }
+            ]},
+            {  path: '/DeliverGoods', component:DeliverGoods,name: '更改账号' ,children:[
+                { path: '/change', component: change, name: '账号变更列表' },
+                { path: '/changea', component: changea, name: '无验证更改账号' },
+            ]},
+            { path: '/DeliverGoods', component:DeliverGoods, name: '短信管理' ,children:[
+                { path: '/smsa', component: smsa, name: '发送短信' },
+                { path: '/smsb', component: smsb, name: '发送理财券短信' },
+                { path: '/smsc', component: smsc, name: '短信列表' }
+            ]},
+            { path: '/DeliverGoods', component:DeliverGoods, name: '券包管理' ,children:[
+                { path: '/vouchera', component: vouchera, name: '发送投资券' },
+                { path: '/voucherb', component: voucherb, name: '已使用的投资券' },
+                { path: '/voucherc', component: voucherc, name: '发送投资券(多个)' },
+                { path: '/voucherd', component: voucherd, name: '发送群体投资券' },
+                { path: '/vouchere', component: vouchere, name: '投资券记录' }
+            ]},
+            { path: '/DeliverGoods', component:DeliverGoods, name: '黑名单管理' ,children:[
+                { path: '/blacklist', component: blacklist, name: '添加黑名单' },
+                { path: '/blacklista', component: blacklista, name: '黑名单列表' }
+            ]},
         ]
     },
-    // {
-    //     path: '/',
-    //     component: Home,
-    //     name: '贷后管理',
-    //     iconCls: 'fa el-icon-picture',
-    //     children: [
-    //         { path: '/reimbursement', component: reimbursement, name: '已还款订单' },
-    //         { path: '/overdue', component: overdue, name: '已逾期订单' },
-    //         { path: '/already_bad_debts', component: already_bad_debts, name: '已坏账订单' },
-    //          { path: '/details/:id', component: details, name: '订单详情' ,hidden: true }
-    //     ]
-    // },
     {
         path: '/',
         component: Home,
-        name: '风控管理',
-        iconCls: 'fa el-icon-picture',
+        name: ' 模块管理',
+        iconCls: 'el-icon-message',//图标样式class
         children: [
-            { path: '/banner', component: banner, name: '风控黑名单管理' },
-            { path: '/system', component: system, name: '开户机审通过订单' },
-            { path: '/Authentication', component: Authentication, name: '开户机审拒绝订单' }
+            // { path: '/main', component:Main, name: '主页', hidden: true },
+            {  path: '/DeliverGoods', component:DeliverGoods, name: '零钱包' ,children:[
+                { path: '/coin_pursea', component:coin_pursea, name: '用户零钱包信息' },
+                { path: '/coin_purseb', component:coin_purseb, name: '零钱包转入记录' },
+                { path: '/coin_pursec', component:coin_pursec, name: '零钱包转出记录' },
+                { path: '/coin_pursed', component:coin_pursed, name: '零钱包不可动金额' },
+                { path: '/coin_pursee', component:coin_pursee, name: '零钱包数据报表' },
+                { path: '/coin_pursef', component:coin_pursef, name: '异常转出记录' }
+            ]},
+            {  path: '/DeliverGoods', component:DeliverGoods,name: '邀请好友' ,children:[
+                { path: '/invitinga', component: invitinga, name: '邀请投资奖励记录' },
+                { path: '/invitingb', component: invitingb, name: '邀请好友列表' },
+            ]}
         ]
     },
     {
         path: '/',
         component: Home,
-        name: '运营管理',
-        iconCls: 'fa el-icon-picture',
+        name: ' 历史下载',
+        iconCls: 'el-icon-message',//图标样式class
         children: [
-            { path: '/DeliverGoods', component: DeliverGoods, name: '发货' },
-            { path: '/Freight', component: Freight, name: '运费模板' }
-            // { path: '/Address', component: Address, name: '地址管理' }
+            { path: '/history', component: history, name: '产品报表' },
+            { path: '/historya', component: historya, name: '运营报表' },
+            { path: '/historyb', component: historyb, name: '财务报表' },
+            { path: '/historyc', component: historyc, name: '券报表' }
         ]
     },
-    //  {
-    //     path: '/',
-    //     component: Home,
-    //     name: '系统管理',
-    //     iconCls: 'fa fa-id-card-o',
-    //     children: [
-    //         { path: '/GoodShipped', component: GoodShipped, name: '发布商品' },
-    //         { path: '/OnSale', component: OnSale, name: '出售中的商品' },
-    //         { path: '/OffTheShelf', component: OffTheShelf, name: '下架商品' },
-    //         { path: '/Illegal', component: Illegal, name: '违规商品' },
-    //         { path: '/ReturnGoods', component: ReturnGoods, name: '退货的商品' }
-    //     ]
-    // },
-
-
-
-    // {
-    //     path: '/',
-    //     component: Home,
-    //     name: '店铺管理',
-    //     iconCls: 'fa el-icon-menu',
-    //     children: [
-    //         { path: '/see', component: see, name: '查看店铺' },
-    //         { path: '/style', component: style, name: '店铺样式管理' },
-    //         { path: '/picture', component: picture, name: '图片存储' },
-    //     ]
-    // },
-    // {
-    //     path: '/',
-    //     component: Home,
-    //     name: '财务管理',
-    //     iconCls: 'fa el-icon-date',
-    //     children: [
-    //         { path: '/FlowingWater', component: FlowingWater, name: '流水记录' },
-    //         { path: '/txgl', component: txgl, name: '提现管理' }
-    //     ]
-    // },
-   // {
-   //      path: '/',
-   //      component: Home,
-   //      name: '',
-   //      iconCls: 'fa fa-address-card',
-   //      leaf: true,//只有一个节点
-   //      children: [
-   //          // { path: '/Replenishment', component: Replenishment, name: '补货专区' ,hidden: true},
-   //          { path: '/add', component:add, name: '补货专区' ,  }
-   //      ]
-   //  },
     {
         path: '/',
         component: Home,
-        name: '',
-        iconCls: 'fa fa-bar-chart',
-        hidden: true,
+        name: ' 系统管理',
+        iconCls: 'el-icon-message',//图标样式class
         children: [
-            // { path: '/examine', component: examine},
-            // { path: '/see', component: see},
-            // { path: '/addPlan/:id/:index', name:'计划发布', component: addPlan}
+            { path: '/system', component: system, name: '系统监控' },
+            { path: '/systema', component: systema, name: '操作日志' },
+            { path: '/systemb', component: systemb, name: '项目配置' }
         ]
     },
     {
