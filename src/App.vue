@@ -1,16 +1,9 @@
 <template>
 	<div id="app">
-		<div class="w1200">
-			<div class="slogan">
-	    		<p class="f22">青春很短，现在就攒</p>
-	    		<p class="f46">火钱理财</p>
-	    		<p class="f18">央企控股/银行存管/供应链金融/专业风控团队</p>
-	    	</div>
-			<transition name="fade"
-			            mode="out-in">
-				<router-view></router-view>
-			</transition>
-		</div>
+		<transition name="fade"
+		            mode="out-in">
+			<router-view></router-view>
+		</transition>
 	</div>
 </template>
 
