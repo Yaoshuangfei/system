@@ -101,10 +101,6 @@
 					<button type="button" class="el-button el-button--primary el-button--small">
 						<span>点击上传</span>
 					</button>
-					<button type="button" class="el-button el-button--primary el-button--small" id="btnClear" @click="clear">清空上传</button>
-					<span style="display: block;font-size: 12px">{{ imageChange }}</span>
-					<!--<button type="button" class="el-button el-button&#45;&#45;primary el-button&#45;&#45;small" id="btnClear" @click="clear">清空上传</button>-->
-					<!--<span style="display: block;font-size: 12px">{{ imageChange }}</span>-->
 				</el-form-item>
 				<el-form-item label="图片位置">
 					<el-select v-model="uploadDetails.poType" placeholder="请选择">
