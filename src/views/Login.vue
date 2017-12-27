@@ -10,7 +10,7 @@
             <el-form-item prop="username">
                 <el-input type="text" v-model="ruleForm2.username" auto-complete="off" @keyup.enter.native="keyLogin" placeholder="账号"></el-input>
             </el-form-item>
-            <el-form-item prop="checkPass">
+            <el-form-item prop="password">
                 <el-input type="password" v-model="ruleForm2.password" auto-complete="off" @keyup.enter.native="keyLogin" placeholder="密码"></el-input>
             </el-form-item>
             <!-- <el-form-item >
