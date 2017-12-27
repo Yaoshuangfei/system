@@ -1,9 +1,16 @@
 <template>
 	<div id="app">
-		<transition name="fade"
-		            mode="out-in">
-			<router-view></router-view>
-		</transition>
+		<div class="w1200">
+			<div class="slogan">
+	    		<p class="f22">青春很短，现在就攒</p>
+	    		<p class="f46">火钱理财</p>
+	    		<p class="f18">央企控股/银行存管/供应链金融/专业风控团队</p>
+	    	</div>
+			<transition name="fade"
+			            mode="out-in">
+				<router-view></router-view>
+			</transition>
+		</div>
 	</div>
 </template>
 
@@ -33,7 +40,30 @@ body {
 	top: 0px;
 	bottom: 0px;
 	width: 100%;
-	background: url('./assets/login.jpg')no-repeat top center;
+	min-width: 1200px;
+	background: url('./assets/loginBg.png')no-repeat top center;
+	background-color: #6BD9F0;
+}
+.w1200{
+	width: 1200px;
+	height: 100%;
+	margin: 0 auto;
+	position:relative;
+	}
+.slogan{
+	position:absolute;
+	top:30%;
+	left:0;
+	color:#fff;
+}
+.slogan .f22{
+	font-size:22px;
+}
+.slogan .f46{
+	font-size:46px;
+}
+.slogan .f18{
+	font-size:18px;
 }
 
 .el-submenu [class^=fa] {
