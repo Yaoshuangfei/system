@@ -1,201 +1,169 @@
 <template>
 	<section>
-		<!--工具条-->
-		<!--工具条-->
-		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;background: #fff">
-			<el-form :inline="true" :model="filters">
-				<!-- <el-form-item>
-					<el-input v-model="filters.name" placeholder="支付银行"></el-input>
-				</el-form-item> -->
-				<el-form-item label="订单号">
-				    <el-input v-model="filters.no"></el-input>
-				</el-form-item>
-				<el-form-item label="手机号码">
-				    <el-input v-model="filters.tell"></el-input>
-				</el-form-item>
-				<el-form-item label="真实姓名">
-				    <el-input v-model="filters.name"></el-input>
-				</el-form-item>
-				<el-form-item label="订单状态">
-					<el-select v-model="filters.type" clearable>
-				      <el-option v-for="item in options" :label="item.label" :value="item.value">
-				      </el-option>
-				    </el-select>
-				</el-form-item>
-				<el-form-item label="平台名称">
-				    <el-select v-model="filters.pname" clearable>
-				      <el-option v-for="item in options" :label="item.label" :value="item.value">
-				      </el-option>
-				    </el-select>
-				</el-form-item>
-				<el-form-item label="放款处理方式">
-				    <el-select v-model="filters.mode" clearable>
-				      <el-option v-for="item in options" :label="item.label" :value="item.value">
-				      </el-option>
-				    </el-select>
-				</el-form-item>
-				<!-- <el-form-item label="订单生成时间">
-				    <el-input v-model="filters.name"></el-input>
-				</el-form-item> -->
-				<el-form-item>
-					<el-button type="primary" v-on:click="getlist">查询</el-button>
-					<!-- <el-button type="primary">导出订单</el-button> -->
-				</el-form-item>
-			</el-form>
-		</el-col>
-
-		<!--列表-->
-		<el-table :data="list" highlight-current-row v-loading="listLoading" border style="width: 100%;min-width: 1080px;">
-			<el-table-column type="index">
-			</el-table-column>
-			<el-table-column prop="No"  label="订单号">
-			</el-table-column>
-			<el-table-column prop="UserID"  label="真实姓名">
-			</el-table-column>
-			<el-table-column prop="Telphone"  label="手机号码">
-			</el-table-column>
-			<el-table-column prop="LoanEub"  label="借款金额(eub)">
-			</el-table-column>
-			<el-table-column prop="LoanDayTime"  label="借款期限(天)">
-			</el-table-column>
-			<el-table-column label="利息+手续费(eub)">
-				<template scope="scope">
-					<span>1</span>
-				</template>
-			</el-table-column>
-			<!-- <el-table-column prop="poType"  label="服务手续费(eub)">
-			</el-table-column> -->
-			<el-table-column prop="LoanEub"  label="实际到账金额(eub)">
-			</el-table-column>
-			<el-table-column prop="poType"  label="平台名称">
-				<template scope="scope">
-					<span>小贷</span>
-				</template>
-			</el-table-column>
-			<el-table-column prop="TransactionTime" label="订单生成时间">
-			</el-table-column>
-			<!-- <el-table-column prop="TransactionType"  label="订单状态">
-			</el-table-column> -->
-			<el-table-column prop="Remark"  label="备注">
-			</el-table-column>
-			<!-- <el-table-column label="操作">
-				<template scope="scope">
-					<el-button type="text" size="small" @click="handEnabled(scope.$index, scope.row)">查看</el-button>
-				</template>
-			</el-table-column> -->
-		</el-table>
-
-		<!--工具条-->
-		<!-- <el-col :span="24" class="toolbar" style="background:#fff;">
-			<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="10" :total="total" style="float:right;">
-			</el-pagination>
-		</el-col> -->
-		<!--新增banner-->
-		<el-dialog title="添加banner" v-model="addbannerdiv" :close-on-click-modal="false">
-			<el-form :model="uploadDetails" label-width="60px" :rules="editFormRules" ref="editForm">
-				<el-form-item label="链接">
-					<el-input v-model="uploadDetails.uploadImgs" type="text" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="banner">
-					<input type="file" style="position:absolute;opacity:0;width:70px;height:30px;margin-right:10px"  @change="upload" id="fileInput">
-					<button type="button" class="el-button el-button--primary el-button--small">
-						<span>点击上传</span>
-					</button>
-					<button type="button" class="el-button el-button--primary el-button--small" id="btnClear" @click="clear">清空上传</button>
-					<span style="display: block;font-size: 12px">{{ imageChange }}</span>
-					<!--<button type="button" class="el-button el-button&#45;&#45;primary el-button&#45;&#45;small" id="btnClear" @click="clear">清空上传</button>-->
-					<!--<span style="display: block;font-size: 12px">{{ imageChange }}</span>-->
-				</el-form-item>
-				<el-form-item label="图片位置">
-					<el-select v-model="uploadDetails.poType" placeholder="请选择">
-				    <el-option
-				      v-for="item in options"
-				      :key="item.value"
-				      :label="item.label"
-				      :value="item.value">
-				    </el-option>
-				  </el-select>
-				</el-form-item>
-				<el-form-item label="序号" >
-					<el-input v-model="uploadDetails.List" type="text" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="描述">
-					<el-input v-model="uploadDetails.information" type="text" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-col :span='24'></el-col>
-			</el-form>
-			<div slot="footer" class="dialog-footer" style="text-align: center;">
-				<el-button type="primary" @click.native="submitUpload" :loading="editLoading">添加</el-button>
-				<el-button type="primary" @click.native="addbannerdiv = false">取消</el-button>
-			</div>
-		</el-dialog>
-
-		<!--修改banner-->
-		<el-dialog title="修改banner" v-model="modifybannerdiv" :close-on-click-modal="false">
-			<el-form :model="editForm" label-width="60px" :rules="editFormRules" ref="editForm">
-				<el-form-item label="链接">
-					<el-input v-model="editForm.link" type="text" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="banner">
-					<!-- <el-input v-model="editForm.picture" type="text" auto-complete="off"></el-input> -->
-					<img style='width: 100px' :src="editForm.picture">
-					<input type="file" style="position:absolute;opacity:0;width:70px;height:30px;margin-right:10px"  @change="modifyload" id="fileInputs">
-					<button type="button" class="el-button el-button--primary el-button--small">
-						<span>点击上传</span>
-					</button>
-					<!-- <button type="button" class="el-button el-button--primary el-button--small" id="btnClears" @click="modifyclear">清空上传</button> -->
-					<!-- <span style="display: block;font-size: 12px">{{ imageChange }}</span> -->
-					<!--<button type="button" class="el-button el-button&#45;&#45;primary el-button&#45;&#45;small" id="btnClear" @click="clear">清空上传</button>-->
-					<!--<span style="display: block;font-size: 12px">{{ imageChange }}</span>-->
-				</el-form-item>
-				<el-form-item label="序号" >
-					<el-input v-model="editForm.orderSort" type="text" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="描述">
-					<el-input v-model="editForm.desc" type="text" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-col :span='24'></el-col>
-			</el-form>
-			<div slot="footer" class="dialog-footer" style="text-align: center;">
-				<el-button type="primary" @click.native="modifyUpload" :loading="editLoading">修改</el-button>
-				<el-button type="primary" @click.native="modifybannerdiv = false">取消</el-button>
-			</div>
-		</el-dialog>
-		<!--编辑界面-->
-		<el-dialog title="订单详情" v-model="editFormVisible" :close-on-click-modal="false" >
-			<el-form :model="uploadDetails" label-width="160px" :rules="editFormRules" ref="editForm">
-				<el-form-item label="订单号">
-					<div>{{uploadDetails.uploadImgs }}</div>
-					<!-- <el-input v-model="addForm.name" type="text" auto-complete="off"></el-input> -->
-				</el-form-item>
-				<el-form-item label="用户名">
-					<div>{{uploadDetails.List }}</div>
-				</el-form-item>
-				<el-form-item label="实付金额">
-					<div>{{uploadDetails.amountPaid }}</div>
-				</el-form-item>
-				<el-form-item label="订单总价">
-					<div>{{uploadDetails.orderTotal }}</div>
-				</el-form-item>
-				<el-form-item label="订单状态">
-					<div>{{uploadDetails.orderStatus }}</div>
-				</el-form-item>
-				<el-form-item label="支付方式">
-					<div>{{uploadDetails.paymentMethod }}</div>
-				</el-form-item>
-				<el-form-item label="创建时间">
-					<div>{{uploadDetails.creationTime}}</div>
-				</el-form-item>
-				<el-form-item label="发货时间">
-					<div>{{uploadDetails.deliveryTime}}</div>
-				</el-form-item>
-				<el-col :span='24'></el-col>
-			</el-form>
-			<div slot="footer" class="dialog-footer" style="text-align: center;">
-				<!-- <el-button type="primary" @click.native="editSubmit" :loading="editLoading">保存</el-button> -->
-				<el-button type="primary" @click.native="editFormVisible = false">关闭</el-button>
-			</div>
-		</el-dialog>
+		<el-row>
+			<el-col  :xs="24" :sm="24" :md="24" :lg="24" style="text-align: center;margin-top: 20px;color: #20a0ff;font-size: 16px;">发布预约产品</el-col>
+			<el-col :offset="1" :xs="22" :sm="22" :md="22" :lg="22" style="margin-top: 40px;border-bottom:1px solid #ddd;padding-bottom: 10px;">以下带*为必选项</el-col>
+			<el-col :offset="2" :xs="10" :sm="10" :md="10" :lg="10" style="margin-top: 20px;">
+				<el-form label-width="150px" :rules="rules" ref="ruleForm" :model="ruleForm">
+			        <el-form-item label="产品名称:" prop="name">
+			          <el-input  style="width:500px;" v-model="ruleForm.name"></el-input>
+			        </el-form-item>
+			        <el-col :offset="5" style="margin-bottom: 10px;padding-left: 10px;color: #aaa;">目前已发布77个新手专享产品(含预约中的产品)</el-col>
+			        <el-form-item label="发起企业:" prop="enterprise">
+			          <el-input  style="width:500px;" v-model="ruleForm.enterprise"></el-input>
+			        </el-form-item>
+			        <el-form-item label="发起人联系电话:" prop="phone">
+			          <el-input  style="width:500px;" v-model="ruleForm.phone"></el-input>
+			        </el-form-item>
+			        <el-form-item label="投资类别:" prop="phone">
+			          <el-select v-model="ruleForm.investment_type" placeholder="请选择">
+			 			<el-option v-for="item in optionsRT" :key="item.value" :label="item.label" :value="item.value"></el-option>
+			          </el-select>
+			          新手标是货押宝投资类别
+			          <!-- <el-input  style="width:500px;" v-model="ruleForm.phone"></el-input> -->
+			        </el-form-item>
+			        <el-form-item label="常规产品时间类型:" prop="phone">
+			          <el-radio-group v-model="ruleForm.cgtime">
+							    <el-radio :label="1">周标</el-radio>
+							    <el-radio :label="2">月标</el-radio>
+							    <el-radio :label="3">单季标</el-radio>
+							    <el-radio :label="4">双季标</el-radio>
+							    <el-radio :label="5">新手标</el-radio>
+							    <el-radio :label="6">半季标</el-radio>
+							    <el-radio :label="7">双月标</el-radio>
+							  </el-radio-group>
+			          <!-- <el-input  style="width:500px;" v-model="ruleForm.phone"></el-input> -->
+			        </el-form-item>
+			        <el-form-item label="常规产品类型:" prop="phone">
+			        	<el-radio-group v-model="ruleForm.cgtype">
+							    <el-radio :label="1">普通</el-radio>
+							    <el-radio :label="2">爆款</el-radio>
+							    <el-radio :label="3">活动</el-radio>
+							  </el-radio-group>
+			          <!-- <el-input  style="width:500px;" v-model="ruleForm.phone"></el-input> -->
+			        </el-form-item>
+			        <el-form-item label="项目总额:" prop="total_project">
+			          <el-input  style="width:300px;" v-model="ruleForm.total_project"></el-input>
+			          （元）
+			        </el-form-item>
+			        <el-form-item label="奖励收益:" prop="jl">
+			          <el-input  style="width:100px;" v-model="ruleForm.jl"></el-input>% +
+			          <el-input  style="width:100px;" v-model="ruleForm.sy"></el-input>%
+			        </el-form-item>
+			        <el-form-item label="还款方式:" prop="type">
+			          <el-select v-model="ruleForm.type" placeholder="请选择">
+						 			<el-option v-for="item in optionsL" :key="item.value" :label="item.label" :value="item.value"></el-option>
+			          </el-select>
+			          <!-- <el-input  style="width:500px;" v-model="ruleForm.type"></el-input> -->
+			        </el-form-item>
+			        <el-form-item label="理财期限:" prop="days">
+			          <el-input  style="width:200px;" v-model="ruleForm.days"></el-input>
+			           天
+			        </el-form-item>
+			        <!-- <el-form-item label="自动进入已售罄时间:" prop="time">
+			          <el-input  style="width:500px;" v-model="ruleForm.time"></el-input>
+			        </el-form-item> -->
+			        <!-- <el-col :offset="5" style="margin-bottom: 10px;padding-left: 10px;color: #aaa;">当前时间如果达到此时间，则该新手产品自动进入已售罄状态</el-col> -->
+			        <el-form-item label="手机活动链接:">
+			          <el-input  style="width:500px;" v-model="ruleForm.active_link"></el-input>
+			        </el-form-item>
+			        <el-form-item label="产品标签:">
+			          <el-input v-model="ruleForm.product_label" style="width:500px;"></el-input>
+			        </el-form-item>
+			        <el-form-item label="标的活动名称:">
+			          <el-input v-model="ruleForm.product_name" style="width:500px;"></el-input>
+			        </el-form-item>
+			        <el-form-item label="还款来源:">
+			          <el-input type="textarea" :rows="6" v-model="ruleForm.protection"  style="width:500px;"></el-input>
+			        </el-form-item>
+			        <el-form-item label="产品类型介绍:">
+			          <el-input type="textarea" :rows="6" v-model="ruleForm.cpjs"  style="width:500px;"></el-input>
+			        </el-form-item>
+			        <el-form-item label="项目介绍:">
+			          <el-input type="textarea" :rows="6" v-model="ruleForm.introduction"  style="width:500px;"></el-input>
+			        </el-form-item>
+			        <el-form-item label="项目图片:">
+			        	<input type="file" style="position:absolute;opacity:0;width:70px;height:30px;margin-right:10px"  @change="upload" id="fileInput">
+								<button type="button" class="el-button el-button--primary el-button--small">
+									<span>点击上传</span>
+								</button>
+			          <!-- <el-input  style="width:500px;"></el-input> -->
+			        </el-form-item>
+			    </el-form>
+			</el-col>
+			<el-col :offset="1" :xs="11" :sm="11" :md="11" :lg="11" style="margin-top: 20px;">
+				<el-form label-width="150px" :rules="rulesRight" ref="rightForm" :model="rightForm">
+			        <el-form-item label="是否新手产品:" prop="license_number">
+			        	<el-radio-group v-model="rightForm.isxs">
+							    <el-radio :label="1">否</el-radio>
+							    <el-radio :label="2">是</el-radio>
+							  </el-radio-group>
+			          <!-- <el-input  style="width:500px;" v-model="rightForm.license_number"></el-input> -->
+			        </el-form-item>
+			        <el-form-item label="证件号:" prop="license_number">
+			          <el-input  style="width:500px;" v-model="rightForm.license_number"></el-input>
+			        </el-form-item>
+			        <el-form-item label="发起人联系地址:" prop="address">
+			          <el-input  style="width:500px;" v-model="rightForm.address"></el-input>
+			        </el-form-item>
+			        <el-form-item label="推荐产品:" prop="address">
+			        	<el-radio-group v-model="rightForm.tjpro">
+							    <el-radio :label="1">否</el-radio>
+							    <el-radio :label="2">是</el-radio>
+							  </el-radio-group>
+			        </el-form-item>
+			        <el-form-item label="奖励产品111:" prop="address">
+			        	<el-radio-group v-model="rightForm.jlpro">
+							    <el-radio :label="1">否</el-radio>
+							    <el-radio :label="2">是</el-radio>
+							  </el-radio-group>
+			        </el-form-item>
+			        <el-form-item label="放置模块111:" prop="address">
+			        	<el-radio-group v-model="rightForm.fzmodel">
+							    <el-radio :label="1">优选理</el-radio>
+							    <el-radio :label="2">特色理财</el-radio>
+							  </el-radio-group>
+			        </el-form-item>
+			        <el-form-item label="起投总额:" prop="start_lump_sum">
+			          <el-input  style="width:300px;" v-model="rightForm.start_lump_sum"></el-input>
+			          （元）
+			        </el-form-item>
+			        <el-form-item label="总收益:" prop="income">
+			          <el-input  style="width:100px;" v-model="rightForm.income"></el-input> %
+			        </el-form-item>
+			        <el-form-item label="起息日:" prop="breath_day">
+			        	<el-select v-model="rightForm.breath_day" placeholder="请选择">
+						 			<el-option v-for="item in optionsRB" :key="item.value" :label="item.label" :value="item.value"></el-option>
+			          </el-select>
+			          <!-- <el-input  style="width:500px;" v-model="rightForm.breath_day"></el-input> -->
+			        </el-form-item>
+			        <el-form-item label="项目结束时间:" prop="jstime">
+			          <el-input  style="width:500px;" v-model="rightForm.jstime"></el-input>
+			        </el-form-item>
+			        <el-form-item label="网站活动链接:">
+			          <el-input style="width:500px;" v-model="rightForm.webActive_link"></el-input>
+			        </el-form-item>
+			        <el-form-item label="活动标语:">
+			          <el-input  style="width:500px;" v-model="rightForm.campaign_slogan"></el-input>
+			        </el-form-item>
+			        <el-form-item label="标题活动名称颜色:">
+			          <el-input type="textarea" :rows="6" v-model="rightForm.btcolor" style="width:500px;"></el-input>
+			        </el-form-item>
+			        <el-form-item label="资金保障111:">
+			          <el-input type="textarea" :rows="6" v-model="rightForm.zibz" style="width:500px;"></el-input>
+			        </el-form-item>
+			        <el-form-item label="产品流程图111:">
+			          <el-input type="textarea" :rows="6" v-model="rightForm.prolct" style="width:500px;"></el-input>
+			        </el-form-item>
+			        <el-form-item label="项目特点:">
+			          <el-input type="textarea" :rows="6" v-model="rightForm.features" style="width:500px;"></el-input>
+			        </el-form-item>
+			    </el-form>
+			</el-col>
+			<el-col :offset="1" :xs="22" :sm="22" :md="22" :lg="22" style="margin-top: 140px;margin-bottom: 200px;text-align: center;">
+					<el-button type="primary">发布</el-button>
+			</el-col>
+		</el-row>
 	</section>
 </template>
 
@@ -207,481 +175,140 @@
 	export default {
 		data() {
 			return {
-				list: [],
-				filters: {
-					no: '',
-					tell:'',
+				ruleForm:{
 					name:'',
+					enterprise:'',
+					phone:'',
+					investment_type:'',
+					cgtime:'',
+					cgtype:'',
+					total_project:'',
+					jl:'',
+					sy:'',
+					days:'',
 					type:'',
-					pname:'',
-					mode:''
+					time:'',
+					active_link:'',
+					product_label:'',
+					product_name:'',
+					protection:'',
+					cpjs:'',
+					introduction:''
 				},
-				checked: true,
-				value:'',
-				value1:'',
-				value2:'',
-				url:'',
-				urls:'',
-				options: [{
-		          value: '1',
-		          label: '首页'
-		        }, {
-		          value: '2',
-		          label: '店铺内'
-		        }],
-				selectSubjectStatus: [
-				{
-					value:'0',
-					label:'全部'
-				},{
-					value:'1',
-					label:'待付款'
-				},{
-					value:'2',
-					label:'待发货'
-				},{
-					value:'3',
-					label:'已发货'
-				},{
-					value:'4',
-					label:'待评价'
-				},{
-					value:'5',
-					label:'退货'
-				}],
-				users: [],
-				total: 0,
-				page: 1,
-				listLoading: false,
-				sels: [],//列表选中列
-				editFormVisible: false,//编辑界面是否显示
-				editLoading: false,
-				editFormRules: {
+				rightForm:{
+					isxs:'',
+					investment_type:'',
+					license_number:'',
+					tjpro:'',
+					jlpro:'',
+					fzmodel:'',
+					address:'',
+					start_lump_sum:'',
+					income:'',
+					breath_day:'',
+					campaign_slogan:'',
+					jstime:'',
+					webActive_link:'',
+					repayment:'',
+					btcolor:'',
+					zibz:'',
+					prolct:'',
+					type_introduction:'',
+					features:''
+				},
+				rules:{
 					name: [
-						{ required: true, message: '请输入姓名', trigger: 'blur' }
-					]
+			            { required: true, message: '请输入产品名称', trigger: 'blur' }
+			        ],
+			        enterprise: [
+			        	{ required: true, message: '请输入企业名称', trigger: 'blur' },
+			            { min: 8,  message: '发起企业名称长度要大于8位', trigger: 'blur' }
+			        ],
+			        phone: [
+			            { required: true, message: '请输入发起人联系电话', trigger: 'blur' }
+			        ],
+			        total_project: [
+			            { required: true, message: '请输入项目总额', trigger: 'blur' }
+			        ],
+			        days: [
+			            { required: true, message: '请输入理财期限', trigger: 'blur' }
+			        ],
+			        type: [
+			            { required: true, message: '请选择还款方式', trigger: 'blur' }
+			        ],
+			        time: [
+			            { required: true, message: '请选择时间', trigger: 'blur' }
+			        ],
+			        jl: [
+			            { required: true, message: '请输入奖励收益', trigger: 'blur' }
+			        ],
 				},
-				//编辑界面数据
-				editForm:{},
-
-				addbannerdiv: false,//新增界面是否显示
-                modifybannerdiv: false,//新增界面是否显示
-				addLoading: false,
-				//新增界面数据
-				uploadDetails: {
-					poType:'',
+				rulesRight:{
+					investment_type: [
+			            { required: true, message: '请选择投资类别', trigger: 'blur' }
+			        ],
+			        license_number: [
+			            { required: true, message: '请输入证件号', trigger: 'blur' }
+			        ],
+			        address: [
+			            { required: true, message: '请输入联系地址', trigger: 'blur' }
+			        ],
+			        start_lump_sum: [
+			            { required: true, message: '请输入起投总额', trigger: 'blur' }
+			        ],
+			        income: [
+			            { required: true, message: '请输入总收益', trigger: 'blur' }
+			        ],
+			        breath_day: [
+			            { required: true, message: '请选择起息日模式', trigger: 'blur' }
+			        ],
+			        jstime: [
+			            { required: true, message: '请选择项目结束时间', trigger: 'blur' }
+			        ]
 				},
-				//新增界面数据
-                modifyDetails: {
-				},
-				orderInformation:[{
-					uploadImg :'145877458784524c',
-					courierNumber :'145877458784524c22',
-					userName:'吸引力量',
-					amountPaid :'300',
-					orderTotal :'900',
-					orderStatus :'待付款',
-					paymentMethod :'微信支付',
-					creationTime:'2017-09-08 17:09',
-					deliveryTime:'2017-09-08 17:09',
-					commodityName:'雨花说'
-				}],
-                formData: new FormData(),
-                fileImg: ''
+				optionsL: [{
+          value: '1',
+          label: '到期还本付息'
+        }],
+        optionsRT: [{
+          value: '1',
+          label: '货押宝'
+        },{
+          value: '2',
+          label: '车无忧'
+        }],
+        optionsRB: [{
+          value: '1',
+          label: 'T+1'
+        }],
+        formData: new FormData(),
+        fileImg: ''
 			}
 		},
-        computed: {
-            // 实时更新上传图片的名字，仅读取，值只须为函数
-            imageChange: function () {
-                return this.fileImg
-            }
-        },
+    computed: {
+
+    },
 		methods: {
-			getlist(){
-				const _this = this;
-				$.ajax({
-                	async : true,
-                    type:'GET',	
-                    dataType:'jsonp',
-                    url:baseUrl+"type=smallloan&action=loan",
-                    // contentType:'application/json;charset=utf-8',
-                    jsonp : 'jsonpCallback', //指定一个查询参数名称来覆盖默认的 jsonp 回调参数名 callback
-                	jsonpCallback: 'jsonp', //设置回调函数名
-                    success:function(response, status, xhr){
-                    	// console.log('状态为：' + status + ',状态是：' + xhr.statusText);
-                        console.log(response.Data)
-                        _this.list = response.Data
-                    }
-                });
-			},
-			handleCurrentChange(val) {
-				this.page = val;
-				this.getlist();
-			},
-//		    清空上传
-            clear(){
-                let btn = document.getElementById("btnClear");
-                let files = document.getElementById("fileInput");
-                this.fileImg = '';
-                // for IE, Opera, Safari, Chrome
-                if (files !== null && files.value) {
-                    //     files.outerHTML = files.outerHTML;
-                    // } else { // FF(包括3.5)
-                    files.value = "";
-                    this.formData = new FormData()
-                }
-            },
-		    //图片上传
-            upload (event) {
-                this.formData = new FormData()
-                let file = event.target.files[0]
-                // console.log(file)
-                const self = this
-                // const flag = this.flag
-                if (file) {
-                    console.log('存在file', file)
-                    console.log(file.size)
-                    this.fileImg = file.name
-                    // console.log(this.formData)
-                    this.formData.append('file', file);
-                    console.log(this.formData);
-                } else {
-                    this.fileImg = ''
-                    console.log('不存在file', file)
-                    this.formData = new FormData()
-                }
-            },
-            //添加
-            submitUpload(){
-                this.$confirm('确认添加吗？', '提示', {}).then(() => {
-                    const _this= this;
-                    _this.$http.post(baseUrl+'/api/attachment/upload', _this.formData, {
-                        progress(event) {
-                        }
-                    })
-                        .then(response => {
-                            const info = JSON.parse(response.bodyText);
-                            // const info = response.body
-							_this.url = info.data[0].baseUri+info.data[0].uri;
-                            _this.UploadImg();
-                        }, error => _this.$emit('complete', 500, error.message))
-                });
-            },
-//			图片上传ajax
-			UploadImg(){
-                const _this= this;
-                const params = {
-                    link:this.uploadDetails.uploadImgs,
-                    picture:this.url,
-                    orderSort:this.uploadDetails.List,
-                    poType:this.uploadDetails.poType,
-                    desc:this.uploadDetails.information,
-                };
-                console.log(params)
-                var url = baseUrl+"/api/indexAdvert/add";
-                var data =JSON.stringify(params);
-                $.ajax({
-                    type:'POST',
-                    dataType:'json',
-                    url:url,
-                    data:data,
-                    contentType:'application/json;charset=utf-8',
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {},
-                    success:function(data){
-                        if(!data.success){
-                            alert(data.msg)
-						}else{
-                            _this.addbannerdiv = false;
-                            _this.getlist();
-						}
-                    }
-                });
-
-
-			},
-			
-			//删除
-            handleEdit: function (index, row) {
-				this.$confirm('确认删除该记录吗?', '提示', {
-					type: 'warning'
-				}).then(() => {
-                    const _this= this;
-                    const params = {
-                        id:row.id
-                    };
-                    var url = baseUrl+"/api/indexAdvert/delete/one";
-                    var data =JSON.stringify(params);
-                    $.ajax({
-                        type:'POST',
-                        dataType:'json',
-                        url:url,
-                        data:data,
-                        contentType:'application/json;charset=utf-8',
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {},
-                        success:function(data){
-                            if(!data.success){
-                                alert(data.msg)
-                            }else{
-                                _this.$message({
-                                    message: '删除成功',
-                                    type: 'success'
-                                });
-                                _this.getlist();
-                            }
-                        }
-                    });
-//					this.listLoading = true;
-					//NProgress.start();
-//					let para = { id: row.id };
-//					removeUser(para).then((res) => {
-//						this.listLoading = false;
-//						//NProgress.done();
-//						this.$message({
-//							message: '删除成功',
-//							type: 'success'
-//						});
-//						this.getUsers();
-//					});
-				}).catch(() => {
-
-				});
-			},
-            //启用
-            handEnabled: function (index, row) {
-                this.$confirm('确认启用该广告位吗?', '提示', {
-                    type: 'warning'
-                }).then(() => {
-                    const _this= this;
-                    const params = {
-                        id:row.id
-                    };
-                    var url = baseUrl+"/api/indexAdvert/enable";repayment 
-                    var data =JSON.stringify(params);
-                    $.ajax({
-                        type:'POST',
-                        dataType:'json',
-                        url:url,
-                        data:data,
-                        contentType:'application/json;charset=utf-8',
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {},
-                        success:function(data){
-                            if(!data.success){
-                                alert(data.msg)
-                            }else{
-                                _this.$message({
-                                    message: '启用成功',
-                                    type: 'success'
-                                });
-                                _this.getlist();
-                            }
-                        }
-                    });
-//					this.listLoading = true;
-                    //NProgress.start();
-//					let para = { id: row.id };
-//					removeUser(para).then((res) => {
-//						this.listLoading = false;
-//						//NProgress.done();
-//						this.$message({
-//							message: '删除成功',
-//							type: 'success'
-//						});
-//						this.getUsers();
-//					});
-                }).catch(() => {
-
-                });
-            },
-            //禁用
-            handDisabled: function (index, row) {
-                this.$confirm('确认禁用该广告位吗?', '提示', {
-                    type: 'warning'
-                }).then(() => {
-                    const _this= this;
-                    const params = {
-                        id:row.id
-                    };
-                    var url = baseUrl+"/api/indexAdvert/disable";
-                    var data =JSON.stringify(params);
-                    $.ajax({
-                        type:'POST',
-                        dataType:'json',
-                        url:url,
-                        data:data,
-                        contentType:'application/json;charset=utf-8',
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {},
-                        success:function(data){
-                            if(!data.success){
-                                alert(data.msg)
-                            }else{
-                                _this.$message({
-                                    message: '禁用成功',
-                                    type: 'success'
-                                });
-                                _this.getlist();
-                            }
-                        }
-                    });
-//					this.listLoading = true;
-                    //NProgress.start();
-//					let para = { id: row.id };
-//					removeUser(para).then((res) => {
-//						this.listLoading = false;
-//						//NProgress.done();
-//						this.$message({
-//							message: '删除成功',
-//							type: 'success'
-//						});
-//						this.getUsers();
-//					});
-                }).catch(() => {
-
-                });
-            },
-
-//			修改
-            handmodify: function (index, row) {
-			    this.modifybannerdiv = true;
-			    this.editForm = row;
-            },
-
-
-//            清空上传
-            modifyclear(){
-        let btn = document.getElementById("btnClears");
-        let files = document.getElementById("fileInputs");
-        this.fileImg = '';
-        // for IE, Opera, Safari, Chrome
-        if (files !== null && files.value) {
-            //     files.outerHTML = files.outerHTML;
-            // } else { // FF(包括3.5)
-            files.value = "";
-            this.formData = new FormData()
-        }
-    },
-    //图片上传后修改
-            modifyload (event) {
-        this.formData = new FormData()
-        let file = event.target.files[0]
-        // console.log(file)
-        const self = this
-        // const flag = this.flag
-        if (file) {
-            console.log('存在file', file)
-            this.fileImg = file.name
-            // console.log(this.formData)
-            this.formData.append('file', file);
-            console.log(this.formData);
-        } else {
-            this.fileImg = ''
-            console.log('不存在file', file)
-            this.formData = new FormData()
-        }
-    },
-    //修改
-            modifyUpload(){
-        this.$confirm('确认修改吗？', '提示', {}).then(() => {
-            const _this= this;
-            _this.$http.post('http://121.43.178.109:8080/ser/api/attachment/upload', _this.formData, {
-                progress(event) {
-                }
-            })
-                .then(response => {
-                    const info = JSON.parse(response.bodyText);
-                    _this.urls = info.data[0].baseUri+info.data[0].uri;
-                    _this.modifyUploads();
-                }, error => _this.$emit('complete', 500, error.message))
-        });
-    },
-    //			图片上传ajax
-            modifyUploads(){
-        const _this= this;
-        const params = {
-            id:this.editForm.id,
-            link:this.editForm.link,
-            picture:this.urls,
-            orderSort:this.editForm.orderSort,
-            desc:this.editForm.desc,
-        };
-        var url = baseUrl+"/api/indexAdvert/update";
-        var data =JSON.stringify(params);
-        $.ajax({
-            type:'POST',
-            dataType:'json',
-            url:url,
-            data:data,
-            contentType:'application/json;charset=utf-8',
-            error: function (XMLHttpRequest, textStatus, errorThrown) {},
-            success:function(data){
-                if(!data.success){
-                    alert(data.msg)
-                }else{
-                    _this.modifybannerdiv = false;
-                    _this.getlist();
-                }
-            }
-        });
-
-
-    },
-
-
-
-
-			//显示编辑界面
-			seeBtn: function (index, row) {
-				this.editFormVisible = true;
-				this.uploadDetails = Object.assign({}, row);
-			},
-			//显示添加banner页面
-			addbanner: function (index, row) {
-				this.addbannerdiv = true;
-				// this.uploadDetails = Object.assign({}, row);
-			},
-			//编辑
-
-			selsChange: function (sels) {
-				this.sels = sels;
-			},
-			//批量删除
-			batchRemove: function () {
-				var ids = this.sels.map(item => item.id).toString();
-				this.$confirm('确认删除选中记录吗？', '提示', {
-					type: 'warning'
-				}).then(() => {
-					this.listLoading = true;
-					//NProgress.start();
-					let para = { ids: ids };
-					batchRemoveUser(para).then((res) => {
-						this.listLoading = false;
-						//NProgress.done();
-						this.$message({
-							message: '删除成功',
-							type: 'success'
-						});
-						this.getUsers();
-					});
-				}).catch(() => {
-
-				});
-			},
-            formatterTime(row,column){
-                let curTime = row.createTime;
-                curTime = new Date(curTime).toLocaleString()
-                return curTime
-            },
-            formatterType(row,column){
-                let type = ''
-                if(row.status === 1){
-                	type = '启用'
-                }else{
-                	type = '禁用'
-                }
-                return type
-            },
-            formatterpoType(row,column) {
-            	return row.poType === 1 ?'首页':'店铺内'
-            }
+			//图片上传
+      upload (event) {
+          this.formData = new FormData()
+          let file = event.target.files[0]
+          // console.log(file)
+          const self = this
+          // const flag = this.flag
+          if (file) {
+              console.log('存在file', file)
+              console.log(file.size)
+              this.fileImg = file.name
+              // console.log(this.formData)
+              this.formData.append('file', file);
+              console.log(this.formData);
+          } else {
+              this.fileImg = ''
+              console.log('不存在file', file)
+              this.formData = new FormData()
+          }
+      },
 		},
 		mounted() {
 			 // this.getlist();
