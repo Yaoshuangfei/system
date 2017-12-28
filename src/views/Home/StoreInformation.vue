@@ -1,76 +1,79 @@
 <template>
 <section>
 	<el-row :gutter="10" style="font-size: 16px;">
-	   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+	   <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="margin:15px auto;">
 	   		今日数据
 	  </el-col>
 	  <el-col :offset="1" :xs="7" :sm="7" :md="3" :lg="3" :xl="3">
 			<el-col class="topH"  :span="24">
-				<el-col :span="24" class="tenH">当天注册数</el-col>
+				<el-col :span="24" class="tenH">平台注册人数</el-col>
 				<el-col :span="24" class="tenH">0</el-col>
 			</el-col>
 	  </el-col>
-	  <el-col :xs="7" :sm="7" :md="3" :lg="3" :xl="3">
+	  <el-col :xs="7" :sm="7" :md="4" :lg="4" :xl="4">
 			<el-col class="topH"  :span="24">
-				<el-col :span="24" class="tenH">开户申请总数</el-col>
+				<el-col :span="24" class="tenH">今天剩余返款人数</el-col>
 				<el-col :span="24" class="tenH">0</el-col>
 			</el-col>
 	  </el-col>
-	  <el-col :xs="7" :sm="7" :md="3" :lg="3" :xl="3">
+	  <el-col :xs="7" :sm="7" :md="4" :lg="4" :xl="4">
 			<el-col class="topH"  :span="24">
-				<el-col :span="24" class="tenH">开户通过次数</el-col>
+				<el-col :span="24" class="tenH">明天返款人数</el-col>
 				<el-col :span="24" class="tenH">0</el-col>
 			</el-col>
 	  </el-col>
-	  <el-col :xs="7" :sm="7" :md="3" :lg="3" :xl="3">
+	  <el-col :xs="7" :sm="7" :md="4" :lg="4" :xl="4">
 			<el-col class="topH"  :span="24">
-				<el-col :span="24" class="tenH">开户通过率</el-col>
+				<el-col :span="24" class="tenH">平台发布总额(元)</el-col>
 				<el-col :span="24" class="tenH">0</el-col>
 			</el-col>
 	  </el-col>
-	  <el-col :xs="7" :sm="7" :md="3" :lg="3" :xl="3">
+	  <el-col :xs="7" :sm="7" :md="4" :lg="4" :xl="4">
 			<el-col class="topH"  :span="24">
-				<el-col :span="24" class="tenH">借款申请人数</el-col>
+				<el-col :span="24" class="tenH">平台融资总额(元)</el-col>
 				<el-col :span="24" class="tenH">0</el-col>
 			</el-col>
 	  </el-col>
-	  <el-col :xs="7" :sm="7" :md="3" :lg="3" :xl="3">
-			<el-col class="topH"  :span="24">
-				<el-col :span="24" class="tenH">放款笔数</el-col>
-				<el-col :span="24" class="tenH">0</el-col>
-			</el-col>
-	  </el-col>
-	  <el-col :xs="7" :sm="7" :md="3" :lg="3" :xl="3">
-			<el-col class="topL"  :span="24">
-				<el-col :span="24" class="tenH">还款笔数</el-col>
+	  <el-col :xs="7" :sm="7" :md="4" :lg="4" :xl="4">
+			<el-col class="topH"  :span="24" style="border-right: none;">
+				<el-col :span="24" class="tenH">平台收益总额()</el-col>
 				<el-col :span="24" class="tenH">0</el-col>
 			</el-col>
 	  </el-col>
 	  <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
 			<el-col :xs="11" :sm="11" :md="11" :lg="11" :xl="11" style="border: 1px solid #ddd;margin-top: 40px;border-radius: 5px;box-shadow: 2px 2px 2px #aaa;">
-				<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="margin-top: 10px;">
-					累计数据
+				<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="margin: 15px auto;">
+					零钱罐信息
 	  			</el-col>
-	  			<el-col :offset="2" :xs="10" :sm="10" :md="10" :lg="10" :xl="10" style="margin-top: 30px;margin-bottom: 30px;">
-					历史放款总量13笔
+	  			<el-col :offset="2" :xs="10" :sm="10" :md="10" :lg="10" :xl="10" style="margin-bottom:15px;">
+	  				<el-col :span="24" class="tenH">今天剩余发放收益人数</el-col>
+					<el-col :span="24" class="tenH">0</el-col>
 	  			</el-col>
-	  			<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" style="margin-top: 30px;margin-bottom: 30px;">
-					历史还款总量0笔
+	  			<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" style="margin-bottom:15px;">
+					<el-col :span="24" class="tenH">明天剩余发放收益人数</el-col>
+					<el-col :span="24" class="tenH">0</el-col>
 	  			</el-col>
 	  		</el-col>
 	  		<el-col :offset="1" :xs="11" :sm="11" :md="11" :lg="11" :xl="11" style="border: 1px solid #ddd;margin-top: 40px;border-radius: 5px;box-shadow: 2px 2px 2px #aaa;">
-				<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="margin-top: 10px;">
-					实时数据
+				<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" style="margin: 15px auto;">
+					投资券信息
 	  			</el-col>
-	  			<el-col :offset="2" :xs="10" :sm="10" :md="10" :lg="10" :xl="10" style="margin-top: 30px;margin-bottom: 30px;">
-					待还款总额1.00元
+	  			<el-col :offset="2" :xs="7" :sm="7" :md="7" :lg="7" :xl="7" style="margin-bottom:15px;">
+					<el-col :span="24" class="tenH">赠送投资券总额(元)</el-col>
+					<el-col :span="24" class="tenH">0</el-col>
 	  			</el-col>
-	  			<el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12" style="margin-top: 30px;margin-bottom: 30px;">
-					逾期未还款总额1.00元
+	  			<el-col :xs="7" :sm="8" :md="8" :lg="8" :xl="8" style="margin-bottom:15px;">
+					<el-col :span="24" class="tenH">有效使用投资券总额(元)</el-col>
+					<el-col :span="24" class="tenH">0</el-col>
+	  			</el-col>
+	  			<el-col :xs="7" :sm="7" :md="7" :lg="7" :xl="7" style="margin-bottom:15px;">
+					<el-col :span="24" class="tenH">新手投资券(元)</el-col>
+					<el-col :span="24" class="tenH">0</el-col>
 	  			</el-col>
 	  		</el-col>
 	  </el-col>
 	</el-row>
+
 	<!-- <el-row :gutter="10">
 	  <el-col :xs="18" :sm="18" :md="18" :lg="18" style="margin-top: 50px;background: #ddd;padding-top: 40px;padding-bottom: 30px">
 	  	<el-col :xs="3" :sm="3" :md="3" :lg="3">

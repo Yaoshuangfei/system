@@ -37,27 +37,6 @@ body {
 	background: url('./assets/loginBg.png')no-repeat top center;
 	background-color: #6BD9F0;
 }
-.w1200{
-	width: 1200px;
-	height: 100%;
-	margin: 0 auto;
-	position:relative;
-	}
-.slogan{
-	position:absolute;
-	top:30%;
-	left:0;
-	color:#fff;
-}
-.slogan .f22{
-	font-size:22px;
-}
-.slogan .f46{
-	font-size:46px;
-}
-.slogan .f18{
-	font-size:18px;
-}
 
 .el-submenu [class^=fa] {
 	vertical-align: baseline;

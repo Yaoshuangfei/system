@@ -88,16 +88,16 @@
 					<i class="fa fa-align-justify"></i>
 				</div>
 			</el-col>
-			<el-col :span="2">
+			<el-col :span="3">
 					欢迎您，1111admin！
 			</el-col>
-			<el-col :span="1">
+			<el-col :span="2" class="setBtn">
 					个人设置
 			</el-col>
-			<el-col :span="1">
+			<el-col :span="2" class="setBtn">
 					修改密码
 			</el-col>
-			<el-col :span="2">
+			<el-col :span="2" class="setBtn">
 				<div @click.prevent="logout">
 					退出登录
 				</div>
@@ -536,5 +536,8 @@
 	    vertical-align: middle;
 	    top: -4px;
 	    right: 0px;
-}
+	}
+
+	.setBtn{text-align: center;cursor: pointer;}
+	.setBtn:hover{background-color: #4DB3FF;}
 </style>
