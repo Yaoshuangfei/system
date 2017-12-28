@@ -1,7 +1,31 @@
 <template>
 	<section>
 		<el-row>
-			<el-col  :xs="24" :sm="24" :md="24" :lg="24" style="text-align: center;margin-top: 20px;color: #20a0ff;font-size: 16px;">发布预约产品</el-col>
+			<el-col  :xs="24" :sm="24" :md="24" :lg="24" style="text-align: center;margin-top: 20px;margin-bottom:20px;color: #20a0ff;font-size: 16px;">发布预约产品</el-col>
+			<el-col :offset="1" :xs="22" :sm="22" :md="22" :lg="22">
+				<el-collapse v-model="activeNames">
+				  <el-collapse-item title="正在营销/预约中的产品" name="1">
+				  	<el-col :offset="1" :xs="11" :sm="11" :md="11" :lg="11" style="overflow-y: auto; height: 250px;">
+						<el-table :data="listL" highlight-current-row v-loading="listLoading" border>
+							<el-table-column prop="product_name"  label="产品名称">
+							</el-table-column>
+							<el-table-column prop="sy_money"  label="剩余金额(元)">
+							</el-table-column>
+						</el-table>
+				  	</el-col>
+				  	<el-col :offset="1" :xs="11" :sm="11" :md="11" :lg="11" style="overflow-y: auto; height: 250px;">
+						<el-table :data="listR" highlight-current-row v-loading="listLoading" border>
+							<el-table-column type="index" label="序号">
+							</el-table-column>
+							<el-table-column prop="product_namey"  label="产品名称">
+							</el-table-column>
+							<el-table-column prop="time"  label="插入时间">
+							</el-table-column>
+						</el-table>
+				  	</el-col>
+				  </el-collapse-item>
+				</el-collapse>
+			</el-col>
 			<el-col :offset="1" :xs="22" :sm="22" :md="22" :lg="22" style="margin-top: 40px;border-bottom:1px solid #ddd;padding-bottom: 10px;">以下带*为必选项</el-col>
 			<el-col :offset="2" :xs="10" :sm="10" :md="10" :lg="10" style="margin-top: 20px;">
 				<el-form label-width="150px" :rules="rules" ref="ruleForm" :model="ruleForm">
@@ -175,6 +199,24 @@
 	export default {
 		data() {
 			return {
+				activeNames: ['1'],
+				listL:[{
+					product_name:'双季丰测试No.300',
+					sy_money:'td>35030000'
+				},{
+					product_name:'双季丰测试No.300',
+					sy_money:'td>35030000'
+				}],
+				listR:[{
+					product_namey:'双季丰测试No.300',
+					time:'10:32'
+				},{
+					product_namey:'双季丰测试No.300',
+					time:'10:32'
+				},{
+					product_namey:'双季丰测试No.300',
+					time:'10:32'
+				}],
 				ruleForm:{
 					name:'',
 					enterprise:'',
