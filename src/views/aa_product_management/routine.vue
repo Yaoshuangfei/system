@@ -112,13 +112,13 @@
 							    <el-radio :label="2">是</el-radio>
 							  </el-radio-group>
 			        </el-form-item>
-			        <el-form-item label="奖励产品111:" prop="address">
+			        <el-form-item label="奖励产品:" prop="address">
 			        	<el-radio-group v-model="rightForm.jlpro">
 							    <el-radio :label="1">否</el-radio>
 							    <el-radio :label="2">是</el-radio>
 							  </el-radio-group>
 			        </el-form-item>
-			        <el-form-item label="放置模块111:" prop="address">
+			        <el-form-item label="放置模块:" prop="address">
 			        	<el-radio-group v-model="rightForm.fzmodel">
 							    <el-radio :label="1">优选理</el-radio>
 							    <el-radio :label="2">特色理财</el-radio>
@@ -138,7 +138,8 @@
 			          <!-- <el-input  style="width:500px;" v-model="rightForm.breath_day"></el-input> -->
 			        </el-form-item>
 			        <el-form-item label="项目结束时间:" prop="jstime">
-			          <el-input  style="width:500px;" v-model="rightForm.jstime"></el-input>
+			          <el-date-picker v-model="rightForm.jstime" type="date" placeholder="选择日期"></el-date-picker>
+			          <!-- <el-input  style="width:500px;" v-model="rightForm.jstime"></el-input> -->
 			        </el-form-item>
 			        <el-form-item label="网站活动链接:">
 			          <el-input style="width:500px;" v-model="rightForm.webActive_link"></el-input>
@@ -149,10 +150,10 @@
 			        <el-form-item label="标题活动名称颜色:">
 			          <el-input type="textarea" :rows="6" v-model="rightForm.btcolor" style="width:500px;"></el-input>
 			        </el-form-item>
-			        <el-form-item label="资金保障111:">
+			        <el-form-item label="资金保障:">
 			          <el-input type="textarea" :rows="6" v-model="rightForm.zibz" style="width:500px;"></el-input>
 			        </el-form-item>
-			        <el-form-item label="产品流程图111:">
+			        <el-form-item label="产品流程图:">
 			          <el-input type="textarea" :rows="6" v-model="rightForm.prolct" style="width:500px;"></el-input>
 			        </el-form-item>
 			        <el-form-item label="项目特点:">

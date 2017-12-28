@@ -4,11 +4,11 @@
 			<el-col  :xs="24" :sm="24" :md="24" :lg="24" style="text-align: center;margin-top: 20px;color: #20a0ff;font-size: 16px;">发布新手产品</el-col>
 			<el-col :offset="1" :xs="22" :sm="22" :md="22" :lg="22" style="margin-top: 40px;border-bottom:1px solid #ddd;padding-bottom: 10px;">以下带*为必选项</el-col>
 			<el-col :offset="2" :xs="10" :sm="10" :md="10" :lg="10" style="margin-top: 20px;">
-				<el-form label-width="150px" :rules="rules" ref="ruleForm" :model="ruleForm">
+				<el-form label-width="170px" :rules="rules" ref="ruleForm" :model="ruleForm">
 			        <el-form-item label="产品名称:" prop="name">
 			          <el-input  style="width:500px;" v-model="ruleForm.name"></el-input>
 			        </el-form-item>
-			        <el-col :offset="5" style="margin-bottom: 10px;padding-left: 10px;color: #aaa;">目前已发布77个新手专享产品(含预约中的产品)</el-col>
+			        <el-col :offset="5" style="margin-bottom: 10px;padding-left: 30px;color: #aaa;">目前已发布77个新手专享产品(含预约中的产品)</el-col>
 			        <el-form-item label="发起企业:" prop="enterprise">
 			          <el-input  style="width:500px;" v-model="ruleForm.enterprise"></el-input>
 			        </el-form-item>
@@ -25,14 +25,15 @@
 			        </el-form-item>
 			        <el-form-item label="还款方式:" prop="type">
 			          <el-select v-model="ruleForm.type" placeholder="请选择">
-						 			<el-option v-for="item in optionsL" :key="item.value" :label="item.label" :value="item.value"></el-option>
+						 	<el-option v-for="item in optionsL" :key="item.value" :label="item.label" :value="item.value"></el-option>
 			          </el-select>
 			          <!-- <el-input  style="width:500px;" v-model="ruleForm.type"></el-input> -->
 			        </el-form-item>
 			        <el-form-item label="自动进入已售罄时间:" prop="time">
-			          <el-input  style="width:500px;" v-model="ruleForm.time"></el-input>
+			          <el-date-picker v-model="ruleForm.time" type="date" placeholder="选择日期"></el-date-picker>
+			          <!-- <el-input  style="width:500px;" v-model="ruleForm.time"></el-input> -->
 			        </el-form-item>
-			        <el-col :offset="5" style="margin-bottom: 10px;padding-left: 10px;color: #aaa;">当前时间如果达到此时间，则该新手产品自动进入已售罄状态</el-col>
+			        <el-col :offset="5" style="margin-bottom: 10px;padding-left: 30px;color: #aaa;">当前时间如果达到此时间，则该新手产品自动进入已售罄状态</el-col>
 			        <el-form-item label="手机活动链接:">
 			          <el-input  style="width:500px;" v-model="ruleForm.active_link"></el-input>
 			        </el-form-item>
