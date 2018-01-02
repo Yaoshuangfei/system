@@ -216,6 +216,7 @@
 	export default {
 		data() {
 			return {
+				isCollapse:true,
 				dynamicTags: [],
 				test:'',
 		        inputVisible: false,
@@ -540,4 +541,6 @@
 
 	.setBtn{text-align: center;cursor: pointer;}
 	.setBtn:hover{background-color: #4DB3FF;}
+	/*设置滚动条宽度*/
+	::-webkit-scrollbar{width:4px;}
 </style>

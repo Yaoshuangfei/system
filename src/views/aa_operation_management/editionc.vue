@@ -1,95 +1,44 @@
 <template>
 	<section>
 		<!--工具条-->
-		<!--工具条-->
-		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;background: #fff">
+	<!-- 	<el-col :span="24" class="toolbar" style="padding-bottom: 0px;background: #fff">
 			<el-form :inline="true" :model="filters">
-				<!-- <el-form-item>
-					<el-input v-model="filters.name" placeholder="支付银行"></el-input>
-				</el-form-item> -->
-				<el-form-item label="订单号">
-				    <el-input v-model="filters.no"></el-input>
-				</el-form-item>
-				<el-form-item label="手机号码">
-				    <el-input v-model="filters.tell"></el-input>
-				</el-form-item>
-				<el-form-item label="真实姓名">
-				    <el-input v-model="filters.name"></el-input>
-				</el-form-item>
-				<el-form-item label="订单状态">
-					<el-select v-model="filters.type" clearable>
-				      <el-option v-for="item in options" :label="item.label" :value="item.value">
-				      </el-option>
-				    </el-select>
-				</el-form-item>
-				<el-form-item label="平台名称">
-				    <el-select v-model="filters.pname" clearable>
-				      <el-option v-for="item in options" :label="item.label" :value="item.value">
-				      </el-option>
-				    </el-select>
-				</el-form-item>
-				<el-form-item label="放款处理方式">
-				    <el-select v-model="filters.mode" clearable>
-				      <el-option v-for="item in options" :label="item.label" :value="item.value">
-				      </el-option>
-				    </el-select>
-				</el-form-item>
-				<!-- <el-form-item label="订单生成时间">
-				    <el-input v-model="filters.name"></el-input>
-				</el-form-item> -->
 				<el-form-item>
-					<el-button type="primary" v-on:click="getlist">查询</el-button>
-					<!-- <el-button type="primary">导出订单</el-button> -->
+					<el-button type="primary" v-on:click="addbanner">添加</el-button>
 				</el-form-item>
 			</el-form>
 		</el-col>
-
+ -->
 		<!--列表-->
-		<el-table :data="list" highlight-current-row v-loading="listLoading" border style="width: 100%;min-width: 1080px;">
+		<el-table :data="orderInformation" highlight-current-row v-loading="listLoading" style="width: 100%;min-width: 1080px;">
 			<el-table-column type="index">
 			</el-table-column>
-			<el-table-column prop="No"  label="订单号">
-			</el-table-column>
-			<el-table-column prop="UserID"  label="真实姓名">
-			</el-table-column>
-			<el-table-column prop="Telphone"  label="手机号码">
-			</el-table-column>
-			<el-table-column prop="LoanEub"  label="借款金额(eub)">
-			</el-table-column>
-			<el-table-column prop="LoanDayTime"  label="借款期限(天)">
-			</el-table-column>
-			<el-table-column label="利息+手续费(eub)">
+			<el-table-column prop="picture" label="图片">
 				<template scope="scope">
-					<span>1</span>
+					<img class="img" :src="scope.row.picture" alt="">
 				</template>
 			</el-table-column>
-			<!-- <el-table-column prop="poType"  label="服务手续费(eub)">
-			</el-table-column> -->
-			<el-table-column prop="LoanEub"  label="实际到账金额(eub)">
+			<el-table-column prop="status"  :formatter='formatterType' label="状态">
 			</el-table-column>
-			<el-table-column prop="poType"  label="平台名称">
+			<el-table-column prop="poType"  :formatter='formatterpoType' label="位置">
+			</el-table-column>
+			<el-table-column prop="createTime" :formatter='formatterTime' label="创建时间">
+			</el-table-column>
+			<el-table-column label="操作">
 				<template scope="scope">
-					<span>小贷</span>
+					<el-button type="text" v-if='scope.row.status ===0' size="small" @click="handEnabled(scope.$index, scope.row)">启用</el-button>
+					<el-button type="text" v-if='scope.row.status ===1' size="small" @click="handDisabled(scope.$index, scope.row)">禁用</el-button>
+					<el-button type="text" v-if='scope.row.status ===0' size="small" @click="handmodify(scope.$index, scope.row)">修改</el-button>
+					<el-button type="text" size="small" @click="handleEdit(scope.$index, scope.row)">删除</el-button>
 				</template>
 			</el-table-column>
-			<el-table-column prop="TransactionTime" label="订单生成时间">
-			</el-table-column>
-			<!-- <el-table-column prop="TransactionType"  label="订单状态">
-			</el-table-column> -->
-			<el-table-column prop="Remark"  label="备注">
-			</el-table-column>
-			<!-- <el-table-column label="操作">
-				<template scope="scope">
-					<el-button type="text" size="small" @click="handEnabled(scope.$index, scope.row)">查看</el-button>
-				</template>
-			</el-table-column> -->
 		</el-table>
 
 		<!--工具条-->
-		<!-- <el-col :span="24" class="toolbar" style="background:#fff;">
+		<el-col :span="24" class="toolbar" style="background:#fff;">
 			<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="10" :total="total" style="float:right;">
 			</el-pagination>
-		</el-col> -->
+		</el-col>
 		<!--新增banner-->
 		<el-dialog title="添加banner" v-model="addbannerdiv" :close-on-click-modal="false">
 			<el-form :model="uploadDetails" label-width="60px" :rules="editFormRules" ref="editForm">
@@ -207,15 +156,7 @@
 	export default {
 		data() {
 			return {
-				list: [],
-				filters: {
-					no: '',
-					tell:'',
-					name:'',
-					type:'',
-					pname:'',
-					mode:''
-				},
+				radio: '0',
 				checked: true,
 				value:'',
 				value1:'',
@@ -249,6 +190,11 @@
 					value:'5',
 					label:'退货'
 				}],
+				filters: {
+					name: '',
+					status:'',
+					type:''
+				},
 				users: [],
 				total: 0,
 				page: 1,
@@ -297,27 +243,6 @@
             }
         },
 		methods: {
-			getlist(){
-				const _this = this;
-				$.ajax({
-                	async : true,
-                    type:'GET',	
-                    dataType:'jsonp',
-                    url:baseUrl+"type=smallloan&action=loan",
-                    // contentType:'application/json;charset=utf-8',
-                    jsonp : 'jsonpCallback', //指定一个查询参数名称来覆盖默认的 jsonp 回调参数名 callback
-                	jsonpCallback: 'jsonp', //设置回调函数名
-                    success:function(response, status, xhr){
-                    	// console.log('状态为：' + status + ',状态是：' + xhr.statusText);
-                        console.log(response.Data)
-                        _this.list = response.Data
-                    }
-                });
-			},
-			handleCurrentChange(val) {
-				this.page = val;
-				this.getlist();
-			},
 //		    清空上传
             clear(){
                 let btn = document.getElementById("btnClear");
@@ -399,7 +324,38 @@
 
 
 			},
-			
+			getlist(){
+				const _this = this;
+                _this.orderInformation = [];
+				const params = {
+                    poType:''
+				};
+                var url = baseUrl+"/api/indexAdvert/find/page?pageNum="+_this.page+"&pageSize=10";
+                var data =JSON.stringify(params);
+                $.ajax({
+                    type:'POST',
+                    dataType:'json',
+                    url:url,
+                    data:data,
+                    contentType:'application/json;charset=utf-8',
+                    success:function(data){
+                        if(!data.success){
+                            alert(data.msg)
+                        }else{
+                        	console.log(data)
+                            var _length 	= data.data.list;
+                            _this.total 	= data.data.total;
+                            for (var i = 0; i < _length.length; i++) {
+                                _this.orderInformation.push(_length[i]);
+                            }
+                        }
+                    }
+                });
+			},
+			handleCurrentChange(val) {
+				this.page = val;
+				this.getlist();
+			},
 			//删除
             handleEdit: function (index, row) {
 				this.$confirm('确认删除该记录吗?', '提示', {
@@ -455,7 +411,7 @@
                     const params = {
                         id:row.id
                     };
-                    var url = baseUrl+"/api/indexAdvert/enable";repayment 
+                    var url = baseUrl+"/api/indexAdvert/enable";
                     var data =JSON.stringify(params);
                     $.ajax({
                         type:'POST',
@@ -690,4 +646,5 @@
 </script>
 
 <style>
+	
 </style>

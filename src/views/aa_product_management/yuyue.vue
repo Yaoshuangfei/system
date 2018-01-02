@@ -202,6 +202,7 @@
 	export default {
 		data() {
 			return {
+				listLoading:false,
 				activeNames: ['1'],
 				listL:[{
 					product_name:'双季丰测试No.300',
