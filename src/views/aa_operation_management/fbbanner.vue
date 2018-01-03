@@ -8,32 +8,11 @@
 				</el-form-item>
 			</el-form>
 		</el-col> -->
-		<el-col  :xs="24" :sm="24" :md="24" :lg="24" style="margin:20px auto;margin-left: 25%;color: #20a0ff;font-size: 16px;">发布banner</el-col>
+		<el-col  :xs="24" :sm="24" :md="24" :lg="24" style="margin:20px auto;margin-left: 25%;color: #20a0ff;font-size: 16px;">发布新闻</el-col>
+		<el-col :offset="1" :xs="22" :sm="22" :md="22" :lg="22" style="margin-top: 40px;border-bottom:1px solid #ddd;padding-bottom: 10px;">以下带<span style="color: red">*</span>为必选项</el-col>
 		<el-col :offset="1" :xs="10" :sm="10" :md="10" :lg="10" style="margin-top: 20px;">
-				<el-form label-width="150px"  :model="uploadDetails">
-			       	<el-form-item label="标题：">
-						<el-input v-model="uploadDetails.uploadImgs" type="text"></el-input>
-					</el-form-item>
-					<el-form-item label="描述：">
-						<el-input v-model="uploadDetails.information" type="textarea" :rows="6"></el-input>
-					</el-form-item>
-					<el-form-item label="公告ID：" >
-						<el-input v-model="uploadDetails.List" type="text"></el-input>
-					</el-form-item>
-					<el-form-item label="活动链接：" >
-						<el-input v-model="uploadDetails.List" type="text"></el-input>
-					</el-form-item>
-					<el-form-item label="类型：">
-						<el-select v-model="uploadDetails.poType" placeholder="请选择">
-					    <el-option
-					      v-for="item in options"
-					      :key="item.value"
-					      :label="item.label"
-					      :value="item.value">
-					    </el-option>
-					  </el-select>
-					</el-form-item>
-					<el-form-item label="banner图片：">
+				<el-form label-width="150px"  :model="uploadDetails" :rules="rules" ref="uploadDetails" >.
+					<el-form-item label="标题缩略图：">
 						<input type="file" style="position:absolute;opacity:0;width:70px;height:30px;margin-right:10px"  @change="upload" id="fileInput">
 						<button type="button" class="el-button el-button--primary el-button--small">
 							<span>点击上传</span>
@@ -43,8 +22,43 @@
 						<!--<button type="button" class="el-button el-button&#45;&#45;primary el-button&#45;&#45;small" id="btnClear" @click="clear">清空上传</button>-->
 						<!--<span style="display: block;font-size: 12px">{{ imageChange }}</span>-->
 					</el-form-item>
+			       	<el-form-item label="公告标题：" prop="name">
+						<el-input v-model="uploadDetails.uploadImgs" type="text"></el-input>
+					</el-form-item>
+					<el-form-item label="公告类型：" prop="name">
+						<el-input v-model="uploadDetails.uploadImgs" type="text"></el-input>
+					</el-form-item>
+					<!-- <el-form-item label="描述：">
+						<el-input v-model="uploadDetails.information" type="textarea" :rows="6"></el-input>
+					</el-form-item> -->
+					<el-form-item label="公告ID：" >
+						<el-input v-model="uploadDetails.List" type="text"></el-input>
+					</el-form-item>
+					<el-form-item label="活动链接：" >
+						<el-input v-model="uploadDetails.List" type="text"></el-input>
+					</el-form-item>
+					<el-form-item label="公告：" prop="name">
+						<el-input v-model="uploadDetails.uploadImgs" type="text"></el-input>
+					</el-form-item>
+					<el-form-item label="公告置顶：" prop="name">
+						<el-radio-group v-model="radio">
+						    <el-radio :label="1">是</el-radio>
+						    <el-radio :label="0">否</el-radio>
+						</el-radio-group>
+					</el-form-item>
+					<!-- <el-form-item label="类型：">
+						<el-select v-model="uploadDetails.poType" placeholder="请选择">
+					    <el-option
+					      v-for="item in options"
+					      :key="item.value"
+					      :label="item.label"
+					      :value="item.value">
+					    </el-option>
+					  </el-select>
+					</el-form-item> -->
 					<el-col :span='24' style="margin-left:300px;">
-						<el-button type="primary" @click.native="submitUpload" :loading="editLoading">确认发布</el-button>
+						<el-button type="primary" @click.native="submitUpload" :loading="editLoading">预览</el-button>
+						<el-button type="primary" @click.native="submitUpload" :loading="editLoading">发布</el-button>
 					</el-col>
 			    </el-form>
 			</el-col>
@@ -171,7 +185,7 @@
 	export default {
 		data() {
 			return {
-				radio: '0',
+				radio: '1',
 				checked: true,
 				value:'',
 				value1:'',
@@ -217,9 +231,9 @@
 				sels: [],//列表选中列
 				editFormVisible: false,//编辑界面是否显示
 				editLoading: false,
-				editFormRules: {
+				rules: {
 					name: [
-						{ required: true, message: '请输入姓名', trigger: 'blur' }
+						{ required: true, message: '新闻标题', trigger: 'blur' }
 					]
 				},
 				//编辑界面数据

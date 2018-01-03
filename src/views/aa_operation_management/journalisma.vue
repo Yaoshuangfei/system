@@ -1,201 +1,64 @@
 <template>
 	<section>
 		<!--工具条-->
-		<!--工具条-->
-		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;background: #fff">
+		<!-- <el-col :span="24" class="toolbar" style="padding-bottom: 0px;background: #fff">
 			<el-form :inline="true" :model="filters">
-				<!-- <el-form-item>
-					<el-input v-model="filters.name" placeholder="支付银行"></el-input>
-				</el-form-item> -->
-				<el-form-item label="订单号">
-				    <el-input v-model="filters.no"></el-input>
-				</el-form-item>
-				<el-form-item label="手机号码">
-				    <el-input v-model="filters.tell"></el-input>
-				</el-form-item>
-				<el-form-item label="真实姓名">
-				    <el-input v-model="filters.name"></el-input>
-				</el-form-item>
-				<el-form-item label="订单状态">
-					<el-select v-model="filters.type" clearable>
-				      <el-option v-for="item in options" :label="item.label" :value="item.value">
-				      </el-option>
-				    </el-select>
-				</el-form-item>
-				<el-form-item label="平台名称">
-				    <el-select v-model="filters.pname" clearable>
-				      <el-option v-for="item in options" :label="item.label" :value="item.value">
-				      </el-option>
-				    </el-select>
-				</el-form-item>
-				<el-form-item label="放款处理方式">
-				    <el-select v-model="filters.mode" clearable>
-				      <el-option v-for="item in options" :label="item.label" :value="item.value">
-				      </el-option>
-				    </el-select>
-				</el-form-item>
-				<!-- <el-form-item label="订单生成时间">
-				    <el-input v-model="filters.name"></el-input>
-				</el-form-item> -->
 				<el-form-item>
-					<el-button type="primary" v-on:click="getlist">查询</el-button>
-					<!-- <el-button type="primary">导出订单</el-button> -->
+					<el-button type="primary" v-on:click="addbanner">添加</el-button>
 				</el-form-item>
 			</el-form>
-		</el-col>
-
-		<!--列表-->
-		<el-table :data="list" highlight-current-row v-loading="listLoading" border style="width: 100%;min-width: 1080px;">
-			<el-table-column type="index">
-			</el-table-column>
-			<el-table-column prop="No"  label="订单号">
-			</el-table-column>
-			<el-table-column prop="UserID"  label="真实姓名">
-			</el-table-column>
-			<el-table-column prop="Telphone"  label="手机号码">
-			</el-table-column>
-			<el-table-column prop="LoanEub"  label="借款金额(eub)">
-			</el-table-column>
-			<el-table-column prop="LoanDayTime"  label="借款期限(天)">
-			</el-table-column>
-			<el-table-column label="利息+手续费(eub)">
-				<template scope="scope">
-					<span>1</span>
-				</template>
-			</el-table-column>
-			<!-- <el-table-column prop="poType"  label="服务手续费(eub)">
-			</el-table-column> -->
-			<el-table-column prop="LoanEub"  label="实际到账金额(eub)">
-			</el-table-column>
-			<el-table-column prop="poType"  label="平台名称">
-				<template scope="scope">
-					<span>小贷</span>
-				</template>
-			</el-table-column>
-			<el-table-column prop="TransactionTime" label="订单生成时间">
-			</el-table-column>
-			<!-- <el-table-column prop="TransactionType"  label="订单状态">
-			</el-table-column> -->
-			<el-table-column prop="Remark"  label="备注">
-			</el-table-column>
-			<!-- <el-table-column label="操作">
-				<template scope="scope">
-					<el-button type="text" size="small" @click="handEnabled(scope.$index, scope.row)">查看</el-button>
-				</template>
-			</el-table-column> -->
-		</el-table>
-
-		<!--工具条-->
-		<!-- <el-col :span="24" class="toolbar" style="background:#fff;">
-			<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="10" :total="total" style="float:right;">
-			</el-pagination>
 		</el-col> -->
-		<!--新增banner-->
-		<el-dialog title="添加banner" v-model="addbannerdiv" :close-on-click-modal="false">
-			<el-form :model="uploadDetails" label-width="60px" :rules="editFormRules" ref="editForm">
-				<el-form-item label="链接">
-					<el-input v-model="uploadDetails.uploadImgs" type="text" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="banner">
-					<input type="file" style="position:absolute;opacity:0;width:70px;height:30px;margin-right:10px"  @change="upload" id="fileInput">
-					<button type="button" class="el-button el-button--primary el-button--small">
-						<span>点击上传</span>
-					</button>
-					<button type="button" class="el-button el-button--primary el-button--small" id="btnClear" @click="clear">清空上传</button>
-					<span style="display: block;font-size: 12px">{{ imageChange }}</span>
-					<!--<button type="button" class="el-button el-button&#45;&#45;primary el-button&#45;&#45;small" id="btnClear" @click="clear">清空上传</button>-->
-					<!--<span style="display: block;font-size: 12px">{{ imageChange }}</span>-->
-				</el-form-item>
-				<el-form-item label="图片位置">
-					<el-select v-model="uploadDetails.poType" placeholder="请选择">
-				    <el-option
-				      v-for="item in options"
-				      :key="item.value"
-				      :label="item.label"
-				      :value="item.value">
-				    </el-option>
-				  </el-select>
-				</el-form-item>
-				<el-form-item label="序号" >
-					<el-input v-model="uploadDetails.List" type="text" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="描述">
-					<el-input v-model="uploadDetails.information" type="text" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-col :span='24'></el-col>
-			</el-form>
-			<div slot="footer" class="dialog-footer" style="text-align: center;">
-				<el-button type="primary" @click.native="submitUpload" :loading="editLoading">添加</el-button>
-				<el-button type="primary" @click.native="addbannerdiv = false">取消</el-button>
-			</div>
-		</el-dialog>
-
-		<!--修改banner-->
-		<el-dialog title="修改banner" v-model="modifybannerdiv" :close-on-click-modal="false">
-			<el-form :model="editForm" label-width="60px" :rules="editFormRules" ref="editForm">
-				<el-form-item label="链接">
-					<el-input v-model="editForm.link" type="text" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="banner">
-					<!-- <el-input v-model="editForm.picture" type="text" auto-complete="off"></el-input> -->
-					<img style='width: 100px' :src="editForm.picture">
-					<input type="file" style="position:absolute;opacity:0;width:70px;height:30px;margin-right:10px"  @change="modifyload" id="fileInputs">
-					<button type="button" class="el-button el-button--primary el-button--small">
-						<span>点击上传</span>
-					</button>
-					<!-- <button type="button" class="el-button el-button--primary el-button--small" id="btnClears" @click="modifyclear">清空上传</button> -->
-					<!-- <span style="display: block;font-size: 12px">{{ imageChange }}</span> -->
-					<!--<button type="button" class="el-button el-button&#45;&#45;primary el-button&#45;&#45;small" id="btnClear" @click="clear">清空上传</button>-->
-					<!--<span style="display: block;font-size: 12px">{{ imageChange }}</span>-->
-				</el-form-item>
-				<el-form-item label="序号" >
-					<el-input v-model="editForm.orderSort" type="text" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-form-item label="描述">
-					<el-input v-model="editForm.desc" type="text" auto-complete="off"></el-input>
-				</el-form-item>
-				<el-col :span='24'></el-col>
-			</el-form>
-			<div slot="footer" class="dialog-footer" style="text-align: center;">
-				<el-button type="primary" @click.native="modifyUpload" :loading="editLoading">修改</el-button>
-				<el-button type="primary" @click.native="modifybannerdiv = false">取消</el-button>
-			</div>
-		</el-dialog>
-		<!--编辑界面-->
-		<el-dialog title="订单详情" v-model="editFormVisible" :close-on-click-modal="false" >
-			<el-form :model="uploadDetails" label-width="160px" :rules="editFormRules" ref="editForm">
-				<el-form-item label="订单号">
-					<div>{{uploadDetails.uploadImgs }}</div>
-					<!-- <el-input v-model="addForm.name" type="text" auto-complete="off"></el-input> -->
-				</el-form-item>
-				<el-form-item label="用户名">
-					<div>{{uploadDetails.List }}</div>
-				</el-form-item>
-				<el-form-item label="实付金额">
-					<div>{{uploadDetails.amountPaid }}</div>
-				</el-form-item>
-				<el-form-item label="订单总价">
-					<div>{{uploadDetails.orderTotal }}</div>
-				</el-form-item>
-				<el-form-item label="订单状态">
-					<div>{{uploadDetails.orderStatus }}</div>
-				</el-form-item>
-				<el-form-item label="支付方式">
-					<div>{{uploadDetails.paymentMethod }}</div>
-				</el-form-item>
-				<el-form-item label="创建时间">
-					<div>{{uploadDetails.creationTime}}</div>
-				</el-form-item>
-				<el-form-item label="发货时间">
-					<div>{{uploadDetails.deliveryTime}}</div>
-				</el-form-item>
-				<el-col :span='24'></el-col>
-			</el-form>
-			<div slot="footer" class="dialog-footer" style="text-align: center;">
-				<!-- <el-button type="primary" @click.native="editSubmit" :loading="editLoading">保存</el-button> -->
-				<el-button type="primary" @click.native="editFormVisible = false">关闭</el-button>
-			</div>
-		</el-dialog>
+		<el-col  :xs="24" :sm="24" :md="24" :lg="24" style="margin:20px auto;margin-left: 25%;color: #20a0ff;font-size: 16px;">发布新闻</el-col>
+		<el-col :offset="1" :xs="22" :sm="22" :md="22" :lg="22" style="margin-top: 40px;border-bottom:1px solid #ddd;padding-bottom: 10px;">以下带<span style="color: red">*</span>为必选项</el-col>
+		<el-col :offset="1" :xs="16" :sm="16" :md="16" :lg="16" style="margin-top: 20px;">
+				<el-form label-width="150px"  :model="uploadDetails" :rules="rules" ref="uploadDetails" >.
+					<el-form-item label="标题缩略图：">
+						<input type="file" style="position:absolute;opacity:0;width:70px;height:30px;margin-right:10px"  @change="upload" id="fileInput">
+						<button type="button" class="el-button el-button--primary el-button--small">
+							<span>点击上传</span>
+						</button>
+						<!-- <button type="button" class="el-button el-button--primary el-button--small" id="btnClear" @click="clear">清空上传</button> -->
+						<span style="display: block;font-size: 12px">{{ imageChange }}</span>
+						<!--<button type="button" class="el-button el-button&#45;&#45;primary el-button&#45;&#45;small" id="btnClear" @click="clear">清空上传</button>-->
+						<!--<span style="display: block;font-size: 12px">{{ imageChange }}</span>-->
+					</el-form-item>
+			       	<el-form-item label="公告标题：" prop="name">
+						<el-input v-model="uploadDetails.uploadImgs" style="width: 500px;" type="text"></el-input>
+					</el-form-item>
+					<el-form-item label="公告类型：" prop="name">
+						<el-select v-model="uploadDetails.poType" placeholder="请选择">
+					    <el-option
+					      v-for="item in options"
+					      :key="item.value"
+					      :label="item.label"
+					      :value="item.value">
+					    </el-option>
+					  </el-select>
+					</el-form-item>
+					<el-form-item label="公告ID：" >
+						<el-input v-model="uploadDetails.List" style="width: 500px;" type="text"></el-input>
+					</el-form-item>
+					<el-form-item label="活动链接：" >
+						<el-input v-model="uploadDetails.List" style="width: 500px;" type="text"></el-input>
+					</el-form-item>
+					<el-form-item label="公告：" prop="name">
+						<el-input v-model="uploadDetails.uploadImgs" style="width: 500px;" type="text"></el-input>
+					</el-form-item>
+					<el-form-item label="公告置顶：" prop="name">
+						<el-radio-group v-model="radio">
+						    <el-radio :label="1">是</el-radio>
+						    <el-radio :label="0">否</el-radio>
+						</el-radio-group>
+					</el-form-item>
+					<el-form-item label="描述：">
+						<div id = 'editor-trigger' style="height: 480px"></div>
+					</el-form-item>
+					<el-col :span='24' style="margin-left:300px;">
+						<el-button type="primary" @click.native="submitUpload" :loading="editLoading">预览</el-button>
+						<el-button type="primary" @click.native="submitUpload" :loading="editLoading">发布</el-button>
+					</el-col>
+			    </el-form>
+			</el-col>
 	</section>
 </template>
 
@@ -203,19 +66,12 @@
 	import { state } from '../../vuex/state'
 	import util from '../../common/js/util'
 	import {baseUrl , editUser, addUser } from '../../api/api';
+	import wangEditor from 'wangEditor'
 
 	export default {
 		data() {
 			return {
-				list: [],
-				filters: {
-					no: '',
-					tell:'',
-					name:'',
-					type:'',
-					pname:'',
-					mode:''
-				},
+				radio: 1,
 				checked: true,
 				value:'',
 				value1:'',
@@ -224,10 +80,22 @@
 				urls:'',
 				options: [{
 		          value: '1',
-		          label: '首页'
+		          label: '隐藏公告(用作SEO优化)'
 		        }, {
 		          value: '2',
-		          label: '店铺内'
+		          label: '平台公告'
+		        }, {
+		          value: '3',
+		          label: '获奖公告'
+		        }, {
+		          value: '4',
+		          label: '媒体公告'
+		        }, {
+		          value: '5',
+		          label: '系统消息'
+		        }, {
+		          value: '6',
+		          label: '活动中心'
 		        }],
 				selectSubjectStatus: [
 				{
@@ -249,6 +117,11 @@
 					value:'5',
 					label:'退货'
 				}],
+				filters: {
+					name: '',
+					status:'',
+					type:''
+				},
 				users: [],
 				total: 0,
 				page: 1,
@@ -256,9 +129,9 @@
 				sels: [],//列表选中列
 				editFormVisible: false,//编辑界面是否显示
 				editLoading: false,
-				editFormRules: {
+				rules: {
 					name: [
-						{ required: true, message: '请输入姓名', trigger: 'blur' }
+						{ required: true, message: '新闻标题', trigger: 'blur' }
 					]
 				},
 				//编辑界面数据
@@ -291,33 +164,13 @@
 			}
 		},
         computed: {
+        	wangEditor,
             // 实时更新上传图片的名字，仅读取，值只须为函数
             imageChange: function () {
                 return this.fileImg
             }
         },
 		methods: {
-			getlist(){
-				const _this = this;
-				$.ajax({
-                	async : true,
-                    type:'GET',	
-                    dataType:'jsonp',
-                    url:baseUrl+"type=smallloan&action=loan",
-                    // contentType:'application/json;charset=utf-8',
-                    jsonp : 'jsonpCallback', //指定一个查询参数名称来覆盖默认的 jsonp 回调参数名 callback
-                	jsonpCallback: 'jsonp', //设置回调函数名
-                    success:function(response, status, xhr){
-                    	// console.log('状态为：' + status + ',状态是：' + xhr.statusText);
-                        console.log(response.Data)
-                        _this.list = response.Data
-                    }
-                });
-			},
-			handleCurrentChange(val) {
-				this.page = val;
-				this.getlist();
-			},
 //		    清空上传
             clear(){
                 let btn = document.getElementById("btnClear");
@@ -353,7 +206,7 @@
             },
             //添加
             submitUpload(){
-                this.$confirm('确认添加吗？', '提示', {}).then(() => {
+                this.$confirm('确认发布吗？', '提示', {}).then(() => {
                     const _this= this;
                     _this.$http.post(baseUrl+'/api/attachment/upload', _this.formData, {
                         progress(event) {
@@ -399,7 +252,38 @@
 
 
 			},
-			
+			getlist(){
+				const _this = this;
+                _this.orderInformation = [];
+				const params = {
+                    poType:''
+				};
+                var url = baseUrl+"/api/indexAdvert/find/page?pageNum="+_this.page+"&pageSize=10";
+                var data =JSON.stringify(params);
+                $.ajax({
+                    type:'POST',
+                    dataType:'json',
+                    url:url,
+                    data:data,
+                    contentType:'application/json;charset=utf-8',
+                    success:function(data){
+                        if(!data.success){
+                            alert(data.msg)
+                        }else{
+                        	console.log(data)
+                            var _length 	= data.data.list;
+                            _this.total 	= data.data.total;
+                            for (var i = 0; i < _length.length; i++) {
+                                _this.orderInformation.push(_length[i]);
+                            }
+                        }
+                    }
+                });
+			},
+			handleCurrentChange(val) {
+				this.page = val;
+				this.getlist();
+			},
 			//删除
             handleEdit: function (index, row) {
 				this.$confirm('确认删除该记录吗?', '提示', {
@@ -455,7 +339,7 @@
                     const params = {
                         id:row.id
                     };
-                    var url = baseUrl+"/api/indexAdvert/enable";repayment 
+                    var url = baseUrl+"/api/indexAdvert/enable";
                     var data =JSON.stringify(params);
                     $.ajax({
                         type:'POST',
@@ -681,13 +565,64 @@
             },
             formatterpoType(row,column) {
             	return row.poType === 1 ?'首页':'店铺内'
-            }
+            },
+            initEditor(data) {
+                const _this = this
+                const editor = new wangEditor('editor-trigger')
+                editor.config.uploadImgUrl = baseUrl+'/api/attachment/upload'
+                editor.config.uploadHeaders = {
+                    'contentType' : 'application/json;charset=utf-8'
+                }
+
+                editor.config.menus = [
+                    'source',
+                    '|',
+                    'bold',
+                    'underline',
+                    'italic',
+                    'strikethrough',
+                    'eraser',
+                    'forecolor',
+                    'bgcolor',
+                    '|',
+                    'quote',
+                    'fontfamily',
+                    'fontsize',
+                    'head',
+                    'unorderlist',
+                    'orderlist',
+                    'alignleft',
+                    'aligncenter',
+                    'alignright',
+                    '|',
+                    'link',
+                    'unlink',
+                    'table',
+                    // 'emotion',
+                    '|',
+                    'img',
+                    '|',
+                    'undo',
+                    'redo',
+                    'fullscreen'
+                ]
+                editor.onchange = function () {
+                    // 编辑区域内容变化时，实时打印出当前内容
+                    _this.test_html = this.$txt.html()
+                    console.log(_this.test_html);
+                }
+                editor.create()
+            },
 		},
 		mounted() {
 			 // this.getlist();
+			 this.initEditor()
 		}
 	}
 </script>
 
 <style>
+	.inputW:{
+		width: 300px;
+	}
 </style>
