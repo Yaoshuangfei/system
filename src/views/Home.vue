@@ -92,7 +92,9 @@
 					欢迎您，1111admin！
 			</el-col>
 			<el-col :span="2" class="setBtn">
+				<div @click="dialogSet = true">
 					个人设置
+				</div>
 			</el-col>
 			<el-col :span="2" class="setBtn">
 					修改密码
@@ -204,6 +206,82 @@
 				</div>
 			</section>
 		</el-col>
+
+		<!-- 个人设置弹框 -->
+		<el-dialog title="我的个人设置" v-model="dialogSet" >
+	  		<el-form :model="setForm">
+				<el-row>
+				  	<el-col :span="12">
+					  	<el-form-item label="所属部门" :label-width="formLabelWidth">
+					      	<el-input v-model="setForm.departMent" auto-complete="off"></el-input>
+					    </el-form-item>
+				  	</el-col>
+			  		<el-col :span="12">
+			  			<el-form-item label="工号" :label-width="formLabelWidth">
+					      	<el-input v-model="setForm.jobNum" auto-complete="off"></el-input>
+					    </el-form-item>
+			  		</el-col>
+				</el-row>
+				<el-row>
+				  	<el-col :span="12">
+					  	<el-form-item label="姓名" :label-width="formLabelWidth">
+					      	<el-input v-model="setForm.userName" auto-complete="off"></el-input>
+					    </el-form-item>
+				  	</el-col>
+			  		<el-col :span="12">
+			  			<el-form-item label="身份证号" :label-width="formLabelWidth">
+					      	<el-input v-model="setForm.idCode" auto-complete="off"></el-input>
+					    </el-form-item>
+			  		</el-col>
+				</el-row>
+				<el-row>
+				  	<el-col :span="12">
+					  	<el-form-item label="联系电话" :label-width="formLabelWidth">
+					      	<el-input v-model="setForm.phoNum" auto-complete="off"></el-input>
+					    </el-form-item>
+				  	</el-col>
+			  		<el-col :span="12">
+			  			<el-form-item label="电子邮件" :label-width="formLabelWidth">
+					      	<el-input v-model="setForm.email" auto-complete="off"></el-input>
+					    </el-form-item>
+			  		</el-col>
+				</el-row>
+				<el-row>
+				  	<el-col :span="12">
+					  	<el-form-item label="性别" :label-width="formLabelWidth">
+						    <el-select v-model="setForm.sex" placeholder="请选择活动区域" style="width:360px;">
+						      	<el-option label="男" value="male"></el-option>
+						      	<el-option label="女" value="female"></el-option>
+						    </el-select>
+				  		</el-form-item>
+				  	</el-col>
+			  		<el-col :span="12">
+			  			<el-form-item label="界面皮肤" :label-width="formLabelWidth">
+						    <el-select v-model="setForm.skin" placeholder="请选择皮肤" style="width:360px;">
+						      	<el-option label="经典蓝" value="blue"></el-option>
+						    </el-select>
+				  		</el-form-item>
+			  		</el-col>
+				</el-row>
+				<el-row>
+				  	<el-col :span="12">
+					  	<el-form-item label="联系地址" :label-width="formLabelWidth">
+					      	<el-input v-model="setForm.address" auto-complete="off"></el-input>
+					    </el-form-item>
+				  	</el-col>
+			  		<el-col :span="12">
+			  			<el-form-item label="备注" :label-width="formLabelWidth">
+					      	<el-input v-model="setForm.remark" auto-complete="off"></el-input>
+					    </el-form-item>
+			  		</el-col>
+				</el-row>
+		  </el-form>
+		  <div slot="footer" class="dialog-footer">
+		    	<el-button @click="dialogSet = false">取 消</el-button>
+	   		 	<el-button type="primary" @click="dialogSet = false">确 定</el-button>
+		  </div>			
+		</el-dialog>
+		<!-- 个人设置弹框end -->
 	</el-row>
 </template>
 
@@ -228,15 +306,19 @@
 				collapsed:false,
 				sysUserName: '',
 				sysUserAvatar: '',
-				form: {
-					name: '',
-					region: '',
-					date1: '',
-					date2: '',
-					delivery: false,
-					type: [],
-					resource: '',
-					desc: ''
+				dialogSet:false,
+				formLabelWidth:'100px',
+				setForm: {
+					departMent: '',
+					jobNum:'',
+					userName:'',
+					idCode:'',
+					phoNum:'',
+					email:'',
+					sex:'',
+					skin:'',
+					address:'',
+					remark:''
 				},
 				meunList: []
 			}
