@@ -86,10 +86,10 @@
 		</el-table>
 
 		<!--工具条-->
-		<!-- <el-col :span="24" class="toolbar" style="background:#fff;">
-			<el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="10" :total="total" style="float:right;">
+		<el-col :span="24" class="toolbar" style="background:#fff;">
+			<el-pagination layout="total,prev, pager, next,jumper" @current-change="handleCurrentChange" :page-size="10" :total="total" style="float:right;">
 			</el-pagination>
-		</el-col> -->
+		</el-col>
 		<!--新增banner-->
 		<el-dialog title="添加banner" v-model="addbannerdiv" :close-on-click-modal="false">
 			<el-form :model="uploadDetails" label-width="60px" :rules="editFormRules" ref="editForm">
@@ -250,7 +250,7 @@
 					label:'退货'
 				}],
 				users: [],
-				total: 0,
+				total: 100,
 				page: 1,
 				listLoading: false,
 				sels: [],//列表选中列
