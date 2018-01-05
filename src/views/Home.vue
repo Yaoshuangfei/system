@@ -1,84 +1,7 @@
- <!-- <template>
-	<el-row class="container">
-		<el-col :span="24" class="header">
-			<el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
-				<router-link :to="{ name: '主页'}">
-						<el-button style="font-size: 20px" type="primary">{{sysName}}</el-button>
-				</router-link>
-			</el-col>
-			<el-col :span="10">
-				<div class="tools" @click.prevent="collapse">
-					<i class="fa fa-align-justify"></i>
-				</div>
-			</el-col>
-			<el-col :span="4" style="margin-left:50%">
-				<span class="el-dropdown-link userinfo-inner">交易所EUB：</span>
-				<span class="el-dropdown-link userinfo-inner">{{eub}}</span>
-				<span class="el-dropdown-link userinfo-inner" style="margin-left: 10%">RMB：{{rmb}}</span>
-			</el-col>
-			<el-col :span="4" class="userinfo">
-				<el-dropdown trigger="hover">
-					
-					<span class="el-dropdown-link userinfo-inner">
-					你好:
-					{{sysUserName}}</span>
-					<el-button type="primary"  @click.native="logout">退出登录</el-button>
-				</el-dropdown>
-			</el-col>
-		</el-col>
-		<el-col :span="24" class="main">
-			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
-				<el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" @select="handleselect"
-					 unique-opened router v-show="!collapsed">
-					<template  v-for="(item,index) in arry"  v-if="!item.hidden">
-						<el-submenu :index="index+''" v-if="!item.leaf">
-							<template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
-							<el-menu-item v-for="child in item.children" :index="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>
-						</el-submenu>
-						<el-menu-item v-if="item.leaf&&item.children.length>0" :index="item.children[0].path"><i :class="item.iconCls"></i>{{item.children[0].name}}</el-menu-item>
-					</template>
-				</el-menu> -->
-				<!--导航菜单-折叠后
-				<ul class="el-menu el-menu-vertical-demo collapsed" v-show="collapsed" ref="menuCollapsed">
-					<li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" class="el-submenu item">
-						<template v-if="!item.leaf">
-							<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i :class="item.iconCls"></i></div>
-							<ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-								<li v-for="child in item.children" v-if="!child.hidden" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.name}}</li>
-							</ul>
-						</template>
-						<template v-else>
-							<li class="el-submenu">
-								<div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.children[0].path?'is-active':''" @click="$router.push(item.children[0].path)"><i :class="item.iconCls"></i></div>
-							</li>
-						</template>
-					</li>
-				</ul>
-			</aside>
-			<section class="content-container">
-				<div class="grid-content bg-purple-light">
-					<el-col :span="24" class="breadcrumb-container">
-						<strong class="title">{{$route.name}}</strong>
-						<el-breadcrumb separator="/" class="breadcrumb-inner">
-							<el-breadcrumb-item v-for="item in $route.matched">
-								{{ item.name }}
-							</el-breadcrumb-item>
-						</el-breadcrumb>
-					</el-col>
-					<el-col :span="24" class="content-wrapper">
-						<transition name="fade" mode="out-in">
-							<router-view></router-view>
-						</transition>
-					</el-col>
-				</div>
-			</section>
-		</el-col>
-	</el-row>
-</template> -->
-
 
 <template>
 	<el-row class="container">
+		<!-- 顶部 -->
 		<el-col :span="24" class="header">
 			<el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
 				{{collapsed?'':sysName}}
@@ -97,24 +20,19 @@
 				</div>
 			</el-col>
 			<el-col :span="2" class="setBtn">
+				<div @click="dialogPsw = true">
 					修改密码
+				</div>
 			</el-col>
 			<el-col :span="2" class="setBtn">
 				<div @click.prevent="logout">
 					退出登录
 				</div>
 			</el-col>
-			<!-- <el-col :span="4" class="userinfo">
-				<el-dropdown trigger="hover">
-					<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" /> {{sysUserName}}</span>
-					<el-dropdown-menu slot="dropdown">
-						<el-dropdown-item>我的消息</el-dropdown-item>
-						<el-dropdown-item>设置</el-dropdown-item>
-						<el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
-					</el-dropdown-menu>
-				</el-dropdown>
-			</el-col> -->
 		</el-col>
+		<!-- 顶部end -->
+
+		<!-- 左侧导航 -->
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
 				<!--导航菜单-->
@@ -206,6 +124,7 @@
 				</div>
 			</section>
 		</el-col>
+		<!-- 左侧导航end -->
 
 		<!-- 个人设置弹框 -->
 		<el-dialog title="我的个人设置" v-model="dialogSet" >
@@ -282,11 +201,28 @@
 		  </div>			
 		</el-dialog>
 		<!-- 个人设置弹框end -->
+
+		<!-- 修改密码弹框 -->
+		<el-dialog title="修改密码" v-model="dialogPsw" size="tiny" class="dialogPsw">
+	  		<el-form :model="pswForm">
+				<el-form-item label="原密码" :label-width="formLabelWidth">
+			      	<el-input v-model="pswForm.oldPassword" auto-complete="off"></el-input>
+			    </el-form-item>
+			    <el-form-item label="新密码" :label-width="formLabelWidth">
+			      	<el-input v-model="pswForm.newPassword1" auto-complete="off"></el-input>
+			    </el-form-item>
+			    <el-form-item label="确认新密码" :label-width="formLabelWidth">
+			      	<el-input v-model="pswForm.newPassword2" auto-complete="off"></el-input>
+			    </el-form-item>
+		  	</el-form>
+		  	<div slot="footer" class="dialog-footer">
+		    	<el-button @click="dialogPsw = false">取 消</el-button>
+	   		 	<el-button type="primary" @click="dialogPsw = false">保存</el-button>
+		  	</div>			
+		</el-dialog>
+		<!-- 修改密码弹框end -->
 	</el-row>
 </template>
-
-
-
 
 <script>
 	import { state } from '../vuex/state'
@@ -294,21 +230,21 @@
 	export default {
 		data() {
 			return {
-				isCollapse:true,
+				//导航菜单名称列表
 				dynamicTags: [],
-				test:'',
-		        inputVisible: false,
-		        inputValue: '',
-				eub:'10000000',
-				rmb:'1000',
+
 				sysName:'后台管理',
 				arry:[],
 				collapsed:false,
 				sysUserName: '',
 				sysUserAvatar: '',
-				dialogSet:false,
+
+				//表单label宽度
 				formLabelWidth:'100px',
-				setForm: {
+
+				//我的设置弹框参数
+				dialogSet:false,
+				setForm:{
 					departMent: '',
 					jobNum:'',
 					userName:'',
@@ -320,7 +256,14 @@
 					address:'',
 					remark:''
 				},
-				meunList: []
+
+				//修改密码弹框参数
+				dialogPsw:false,
+				pswForm:{
+					oldPassword:'',
+					newPassword1:'',
+					newPassword2:'',
+				}
 			}
 		},
 		methods: {
@@ -402,7 +345,7 @@
 			//退出登录
 			logout: function () {
 				var _this = this;
-				this.$confirm('确认退出吗?', '提示', {
+				this.$confirm('确认退出管理后台吗?', '提示', {
 					//type: 'warning'
 				}).then(() => {
 					sessionStorage.removeItem('user');
@@ -410,8 +353,6 @@
 				}).catch(() => {
 
 				});
-
-
 			},
 			//折叠导航栏
 			collapse:function(){
@@ -625,4 +566,11 @@
 	.setBtn:hover{background-color: #4DB3FF;}
 	/*设置滚动条宽度*/
 	::-webkit-scrollbar{width:4px;}
+
+	.el-message-box{
+		text-align: center;
+	}
+	.el-message-box__title{text-align: left;}
+
+	.dialogPsw .el-dialog--tiny{width:20%;}
 </style>
